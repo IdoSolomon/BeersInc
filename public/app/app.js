@@ -10,25 +10,7 @@ app.controller('homeCtrl', function () {
     self.msg = 'Home';
 });
 //-------------------------------------------------------------------------------------------------------------------
-app.controller('loginCtrl', ['UserService', '$location', '$window',
-    function (UserService, $location, $window) {
-    var self = this;
-    self.msg = 'Login';
-    self.user = {"username": '', "password": ''};
 
-    self.login = function(valid) {
-        if (valid) {
-            UserService.login(self.user).then(function (success) {
-                $window.alert('You are logged in');
-                $location.path('/');
-            }, function (error) {
-                self.errorMessage = error.data;
-                $window.alert(error.data);
-            })
-        }
-
-    };
-}]);
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('registerCtrl', function () {
     var self = this;
@@ -65,15 +47,15 @@ app.config(['$locationProvider', function($locationProvider) {
 app.config( ['$routeProvider', function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl : "views/home.html",
+            templateUrl : "../views/home.html",
             controller : "homeCtrl"
         })
         .when("/login", {
-            templateUrl : "views/login.html",
-            controller : "loginCtrl"
+            templateUrl : "../views/loginView.html",
+            controller : "loginController"
         })
         .when("/register", {
-            templateUrl : "views/register.html",
+            templateUrl : "../views/register.html",
             controller: "registerCtrl"
         })
         .otherwise({redirect: '/',

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Beers Inc.</title>
-    <script src="angularScripts/angular.js"></script>
-    <script type="text/javascript" src="angularScripts/angular-route.js"></script>
+    <script src="app/shared/angularScripts/angular.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/shared/angularScripts/angular-route.js"></script>
+    <script type="text/javascript" src="app/components/login/loginController.js"></script>
 </head>
   <body>
     <div ng-controller="mainController as mainCtrl">
@@ -17,6 +19,5 @@
     <br>
     <br>
     <ng-view></ng-view>
-    <script src="app.js"></script>
   </body>
 </html>
