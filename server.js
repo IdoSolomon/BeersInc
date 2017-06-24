@@ -14,7 +14,7 @@ let app = express(); // activating express
 
 app.use(express.static(__dirname + '/public'));
 
-// app.locals.users = {};
+app.locals.users = {};
 
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origiin", "*");
@@ -56,14 +56,28 @@ connection.on('connect', function (err) {
         res.send("Connected to DB.");
     });
 
+    let checkToken = function(username) {
+        return (username in app.locals.users);
+    };
+
+    let validateToken = function(token, username) {
+        return(checkToken(username) && (app.locals.users[username] === token));
+    };
+
     app.post('/Login', function (req, res) {
         validateLoginDetails(req)
             .then(function (loginSucceeded) {
-                // let user = req.body.username;
+                let username = req.body.username;
                 // Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
                 // res.send(Cookies.get(user));
-                let token = Math.floor(Math.random() * 1000000) + 1;
-                // app.locals.users[username] = token;
+                let token;
+                if(username in app.locals.users)
+                {
+                    token = Math.floor(Math.random() * 1000000) + 1;
+                    app.locals.users[username] = token;
+                } else {
+                    token = app.locals.users[username];
+                }
                 // let token = 12345;
                 res.json({ "token": token });
                 // res.send(token);
@@ -231,16 +245,6 @@ connection.on('connect', function (err) {
                 let myObj = { "CorrectAnswer": false, "Password": "", "Details": ans };
                 res.send(myObj);
             })
-
-    });
-
-    app.post('/GetLastLoginTime', function (req, res) {
-
-        //TODO
-        //if (!req.query.token) {
-        //    res.redirect("http://your.domain/login");
-        //    return;
-        //}
 
     });
 
