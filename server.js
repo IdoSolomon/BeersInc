@@ -57,12 +57,16 @@ connection.on('connect', function (err) {
     app.post('/Login', function (req, res) {
         validateLoginDetails(req)
             .then(function (loginSucceeded) {
-                var user = req.body.username;
-                Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
-                res.send(Cookies.get(user));
+                // var user = req.body.username;
+                // Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
+                // res.send(Cookies.get(user));
+                var token = Math.floor(Math.random() * 1000000) + 1;
+                app.locals.users[username] = token;
+                res.json({ "token": token });
             })
             .catch(function (reason) {
-                res.send(reason);
+                // res.send(reason);
+                res.status(403).send(reason);
             })
 
     });
@@ -1098,7 +1102,7 @@ connection.on('connect', function (err) {
                         if (ans.length === 1)
                             resolve(true);
                         else
-                            reject("Wrong Username/Password");//change to false and handle elsewhere?
+                            reject("Wrong Username/Password");
                     })
                     .catch(function (ans) {
                         reject(ans);

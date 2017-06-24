@@ -42,7 +42,7 @@ app.factory('UserService', ['$http', function($http) {
 
         return $http.post('/login', user)
             .then(function(response) {
-                var token = response.data;
+                var token = response.body.token;
                 alert(token+" token");
                 $http.defaults.headers.common = {
                     'my-Token': token,
