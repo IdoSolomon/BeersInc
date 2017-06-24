@@ -14,7 +14,7 @@ app.controller('loginCtrl', ['UserService', '$location', '$window',
     function (UserService, $location, $window) {
     var self = this;
     self.msg = 'Login';
-    self.user = {username: '', password: ''};
+    self.user = {"username": '', "password": ''};
 
     self.login = function(valid) {
         if (valid) {
@@ -23,7 +23,7 @@ app.controller('loginCtrl', ['UserService', '$location', '$window',
                 $location.path('/');
             }, function (error) {
                 self.errorMessage = error.data;
-                $window.alert('log-in has failed');
+                $window.alert(error.data);
             })
         }
 
@@ -40,9 +40,9 @@ app.factory('UserService', ['$http', function($http) {
     service.isLoggedIn = false;
     service.login = function(user) {
 
-        return $http.post('/login', user)
+        return $http.post('http://localhost:3100/login', user)
             .then(function(response) {
-                var token = response.body.token;
+                var token= response.data.token;
                 alert(token+" token");
                 $http.defaults.headers.common = {
                     'my-Token': token,
