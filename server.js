@@ -1,16 +1,16 @@
-﻿var express = require('express'); // Loading the express module to the server.
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var sql = require('./sql_interface');
-var Connection = require('tedious').Connection;
-var Request = require('tedious').Request;
-var moment = require('moment');
-var squel = require("squel");
-var Cookies = require('js-cookie');
-var conversionRate = 3.7;
+﻿let express = require('express'); // Loading the express module to the server.
+let bodyParser = require('body-parser');
+let cors = require('cors');
+let sql = require('./sql_interface');
+let Connection = require('tedious').Connection;
+let Request = require('tedious').Request;
+let moment = require('moment');
+let squel = require("squel");
+let Cookies = require('js-cookie');
+let conversionRate = 3.7;
 
 
-var app = express(); // activating express
+let app = express(); // activating express
 
 app.use(express.static(__dirname + '/public'));
 
@@ -26,13 +26,13 @@ app.use(express.static(__dirname + '/public'));
 //   }
 // });
 
-//var Connection = require('tedious').Connection;
+//let Connection = require('tedious').Connection;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.listen(3100); // server is open and listening on port 3100, to access: localhost:3100 in any browser.
 
-var config = {
+let config = {
     userName: 'hw3admin',
     password: 'dasBeer2',
     server: 'ide-hw3-server.database.windows.net',
@@ -43,7 +43,7 @@ var config = {
     }
 };
 
-var connection = new Connection(config);
+let connection = new Connection(config);
 
 connection.on('connect', function (err) {
     if (err) {
@@ -57,10 +57,10 @@ connection.on('connect', function (err) {
     app.post('/Login', function (req, res) {
         validateLoginDetails(req)
             .then(function (loginSucceeded) {
-                // var user = req.body.username;
+                // let user = req.body.username;
                 // Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
                 // res.send(Cookies.get(user));
-                var token = Math.floor(Math.random() * 1000000) + 1;
+                let token = Math.floor(Math.random() * 1000000) + 1;
                 app.locals.users[username] = token;
                 res.json({ "token": token });
             })
@@ -87,7 +87,7 @@ connection.on('connect', function (err) {
 
     app.get('/GetHottest5', function (req, res) {
 
-        var x = Cookies.get('name'); // => 'value'
+        let x = Cookies.get('name'); // => 'value'
 
 
         buildGetGetHottest5Querry(req)
@@ -114,7 +114,7 @@ connection.on('connect', function (err) {
     });
 
     app.get('/GetConversionRate', function (req, res) {
-        var ans = [];
+        let ans = [];
         ans.push(conversionRate);
         res.send(ans);
 
@@ -133,24 +133,24 @@ connection.on('connect', function (err) {
                                             UpdateUserCategories(req)
                                                 .then(function (reason) {
                                                     if (reason) {
-                                                        var myObj = { "Succeeded": true, "Details": "Registration succeeded!" };
+                                                        let myObj = { "Succeeded": true, "Details": "Registration succeeded!" };
                                                         res.send(myObj);
                                                     }
                                                 })
                                                 .catch(function (reason) {
-                                                    var myObj = { "Succeeded": false, "Details": reason };
+                                                    let myObj = { "Succeeded": false, "Details": reason };
                                                     res.send(myObj);
                                                 })
                                         }
                                     })
                                     .catch(function (reason) {
-                                        var myObj = { "Succeeded": false, "Details": reason };
+                                        let myObj = { "Succeeded": false, "Details": reason };
                                         res.send(myObj);
                                     })
                             }
                         })
                         .catch(function (reason) {
-                            var myObj = { "Succeeded": false, "Details": reason };
+                            let myObj = { "Succeeded": false, "Details": reason };
                             res.send(myObj);
                         })
                 }
@@ -169,7 +169,7 @@ connection.on('connect', function (err) {
         CheckIfUniqueUserName(req)
             .then(function (reason) {
                 if (reason) {
-                    var myObj = { "Succeeded": true, "Details": "Registration succeeded!" };
+                    let myObj = { "Succeeded": true, "Details": "Registration succeeded!" };
                     res.send(myObj);
                 }
             })
@@ -180,7 +180,7 @@ connection.on('connect', function (err) {
 
     app.post('/ForgotPassword', function (req, res) {
 
-        var query = (
+        let query = (
             squel.select()
                 .from("Questions")
                 .field("Question")
@@ -200,7 +200,7 @@ connection.on('connect', function (err) {
 
     app.post('/ValidateAnswer', function (req, res) {
 
-        var query = (
+        let query = (
             squel.select()
                 .from("[Users]")
                 .left_join("[dbo].[Questions]", null, "[dbo].[Users].[Username] =  [dbo].[Questions].[Username]")
@@ -214,16 +214,16 @@ connection.on('connect', function (err) {
         sql.Select(connection, query)
             .then(function (ans) {
                 if (ans.length > 0) {
-                    var myObj = { "CorrectAnswer": true, "Password": ans[0].trim() };
+                    let myObj = { "CorrectAnswer": true, "Password": ans[0].trim() };
                     res.send(myObj);
                 }
                 else {
-                    var myObj = { "CorrectAnswer": false, "Password": "" };
+                    let myObj = { "CorrectAnswer": false, "Password": "" };
                     res.send(myObj);
                 }
             })
             .catch(function (ans) {
-                var myObj = { "CorrectAnswer": false, "Password": "", "Details": ans };
+                let myObj = { "CorrectAnswer": false, "Password": "", "Details": ans };
                 res.send(myObj);
             })
 
@@ -302,7 +302,7 @@ connection.on('connect', function (err) {
                                                     .then(function (query) {
                                                         sql.Select(connection, query)
                                                             .then(function (ans) {
-                                                                var id = ans[0].OrderID;
+                                                                let id = ans[0].OrderID;
                                                                 buildGetOrderItemsQuery(req, id)
                                                                     .then(function (query) {
                                                                         sql.Insert(connection, query)
@@ -342,7 +342,7 @@ connection.on('connect', function (err) {
             .then(function (query) {
                 sql.Select(connection, query)
                     .then(function (ans) {
-                        var verdict = [];
+                        let verdict = [];
                         if (ans.length > 0)
                             verdict.push(true);
                         else
@@ -395,7 +395,7 @@ connection.on('connect', function (err) {
     app.post('/AddItem', function (req, res) {
         validateUserIsManagers(req)
             .then(function (query) {
-                var query = (
+                let query = (
                     squel.insert()
                         .into("[dbo].[Beers]")
                         .set("[CategoryID]", req.body.CategoryID)
@@ -445,7 +445,7 @@ connection.on('connect', function (err) {
     app.post('/AddUser', function (req, res) {
         validateUserIsManagers(req)
             .then(function (query) {
-                var query = (
+                let query = (
                     squel.insert()
                         .into("[dbo].[Users]")
                         .set("[Username]", req.body.AddedUsername)
@@ -493,7 +493,7 @@ connection.on('connect', function (err) {
     app.post('/GetInventory', function (req, res) {
         validateUserIsManagers(req)
             .then(function (query) {
-                var query = (
+                let query = (
                     squel.select()
                         .from("[dbo].[Stock]")
                         .left_join("[dbo].[Beers]", null, "([Stock].[BeerID] = [Beers].[ID])")
@@ -521,7 +521,7 @@ connection.on('connect', function (err) {
 
         validateUserIsManagers(req)
             .then(function (query) {
-                var query = (
+                let query = (
                     squel.update()
                         .table("[dbo].[Stock]")
                         .set("[dbo].[Stock].[Quantity]", req.body.Quantity)
@@ -542,10 +542,10 @@ connection.on('connect', function (err) {
             })
     });
 
-    var buildRemoveUserQuery = function (req) {
+    let buildRemoveUserQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.delete()
                         .from("[dbo].[Users]")
                         .where("[Username] = '{0}'".replace('{0}', req.body.UsernameDel))
@@ -557,10 +557,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildRemoveUserQuestionsQuery = function (req) {
+    let buildRemoveUserQuestionsQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.delete()
                         .from("[dbo].[Questions]")
                         .where("[Username] = '{0}'".replace('{0}', req.body.UsernameDel))
@@ -572,10 +572,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildRemoveItemQuery = function (req) {
+    let buildRemoveItemQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.delete()
                         .from("[dbo].[Beers]")
                         .where("[ID] = '{0}'".replace('{0}', req.body.BeerID))
@@ -587,10 +587,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildRemoveItemStockQuery = function (req) {
+    let buildRemoveItemStockQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.delete()
                         .from("[dbo].[Stock]")
                         .where("[BeerID] = '{0}'".replace('{0}', req.body.BeerID))
@@ -602,10 +602,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildItemUpdateQuery = function (req) {
+    let buildItemUpdateQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var strSet = "";
+                let strSet = "";
                 if (typeof req.body.BeerName !== 'undefined' && req.body.BeerName !== "") {
                     strSet += "[Name] = '{0}'".replace('{0}', req.body.BeerName);
                 }
@@ -629,7 +629,7 @@ connection.on('connect', function (err) {
                         strSet += ", ";
                     strSet += "[Volume] = '{0}'".replace('{0}', req.body.Volume);
                 }
-                var query = (
+                let query = (
                     squel.update()
                         .table("[dbo].[Beers]")
                         .set(strSet)
@@ -642,11 +642,11 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildStockCheckQuery = function (req) {
+    let buildStockCheckQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
                 items = req.body.Items;
-                var query = "SELECT [BeerID] FROM [dbo].[Stock] WHERE ";
+                let query = "SELECT [BeerID] FROM [dbo].[Stock] WHERE ";
 
                 for (i = 0; i < items.length; i++) {
                     if (i > 0) {
@@ -662,20 +662,20 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildUpdateStockQuery = function (req, id) {
+    let buildUpdateStockQuery = function (req, id) {
         return new Promise(
             function (resolve, reject) {
-                var query = "UPDATE Table_A SET Table_A.[Quantity] = (Table_A.[Quantity] - Table_B.[Quantity]) FROM [dbo].[Stock] AS Table_A INNER JOIN [dbo].[Orders] AS Table_B ON Table_A.[BeerID] = Table_B.[BeerID] WHERE Table_B.[OrderID] = '{0}'".replace("{0}", id);
+                let query = "UPDATE Table_A SET Table_A.[Quantity] = (Table_A.[Quantity] - Table_B.[Quantity]) FROM [dbo].[Stock] AS Table_A INNER JOIN [dbo].[Orders] AS Table_B ON Table_A.[BeerID] = Table_B.[BeerID] WHERE Table_B.[OrderID] = '{0}'".replace("{0}", id);
                 console.log("Query is: " + query);
                 resolve(query)
             }
         );
     };
 
-    var buildUpdateTotalQuery = function (req, id) {
+    let buildUpdateTotalQuery = function (req, id) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.update()
                         .table("[dbo].[User-Orders]")
                         .set("[Total]", squel.select()
@@ -695,11 +695,11 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetOrderItemsQuery = function (req, id) {
+    let buildGetOrderItemsQuery = function (req, id) {
         return new Promise(
             function (resolve, reject) {
                 items = req.body.Items;
-                var query = "INSERT INTO [dbo].[Orders] ([OrderID], [BeerID], [Quantity]) VALUES";
+                let query = "INSERT INTO [dbo].[Orders] ([OrderID], [BeerID], [Quantity]) VALUES";
 
                 for (i = 0; i < items.length; i++) {
                     if (i > 0) {
@@ -715,10 +715,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetOrderIDQuery = function (req) {
+    let buildGetOrderIDQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .field("[OrderID]")
                         .from("[dbo].[User-Orders]")
@@ -735,10 +735,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildMakeOrderQuery = function (req) {
+    let buildMakeOrderQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.insert()
                         .into("[dbo].[User-Orders]")
                         .set("[Username]", req.body.Username)
@@ -755,10 +755,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetRecommendedQuery = function (req) {
+    let buildGetRecommendedQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .field("[ID]")
                         .field("[CategoryID]")
@@ -782,10 +782,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetPastOrdersQuery = function (req) {
+    let buildGetPastOrdersQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .field("[dbo].[User-Orders].[OrderID]")
                         .field("[dbo].[User-Orders].[OrderDate]")
@@ -809,10 +809,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildSearchQuery = function (req) {
+    let buildSearchQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var strWhere = "";
+                let strWhere = "";
                 if (typeof req.body.BeerName !== 'undefined' && req.body.BeerName !== "") {
                     strWhere += "[dbo].[Beers].[Name] = '{0}'".replace('{0}', req.body.BeerName);
                 }
@@ -836,7 +836,7 @@ connection.on('connect', function (err) {
                         strWhere += " AND ";
                     strWhere += "[dbo].[Beers].[Volume] = '{0}'".replace('{0}', req.body.Volume);
                 }
-                var query = (
+                let query = (
                     squel.select()
                         .field("[dbo].[Beers].[Name]", "BeerName")
                         .field("[dbo].[Categories].[Name]", "CategoryName")
@@ -855,10 +855,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetItemDetailsQuery = function (req) {
+    let buildGetItemDetailsQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .field("[dbo].[Beers].[Name]", "BeerName")
                         .field("[dbo].[Categories].[Name]", "CategoryName")
@@ -877,10 +877,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildIsInStockQuery = function (req) {
+    let buildIsInStockQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .from("[dbo].[Stock]")
                         .where("[dbo].[Stock].[BeerID] = {0}  AND [dbo].[Stock].[Stock] >= {1}".replace('{0}', req.body.BeerID)
@@ -893,10 +893,10 @@ connection.on('connect', function (err) {
         );
     };
 
-    var buildGetCountriesQuerry = function (req) {
+    let buildGetCountriesQuerry = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var query = (
+                let query = (
                     squel.select()
                         .from("Countries")
                         .field("Name")
@@ -909,11 +909,11 @@ connection.on('connect', function (err) {
 
     };
 
-    var buildGetGetHottest5Querry = function (req) {
+    let buildGetGetHottest5Querry = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var currentDate = moment().format('YYYY-MM-DD');
-                var query = " SELECT  [Name], [AlcoholPercentage], [Price], [Volume] " +
+                let currentDate = moment().format('YYYY-MM-DD');
+                let query = " SELECT  [Name], [AlcoholPercentage], [Price], [Volume] " +
                     "FROM [dbo].[Beers] " +
                     "WHERE[CategoryID] IN (" +
                     "SELECT TOP 5 [ID] FROM [dbo].[Beers] " +
@@ -932,11 +932,11 @@ connection.on('connect', function (err) {
     };
 
 
-    var buildGetNewProductsQuerry = function (req) {
+    let buildGetNewProductsQuerry = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var currentDate = moment().format('YYYY-MM-DD');
-                var query = (
+                let currentDate = moment().format('YYYY-MM-DD');
+                let query = (
                     squel.select()
                         .from("Beers")
                         .field("LTRIM(RTRIM(Name)) AS [Beer Name],AlcoholPercentage,Price,Volume")
@@ -951,13 +951,13 @@ connection.on('connect', function (err) {
 
     };
 
-    var CheckIfUniqueUserName = function (req) {
+    let CheckIfUniqueUserName = function (req) {
         console.log("build new promise");
 
         return new Promise(
             function (resolve, reject) {
-                var name = req.body.Username.toString();
-                var query = (
+                let name = req.body.Username.toString();
+                let query = (
                     squel.select()
                         .from("[dbo].[Users]")
                         .field("[Users].[Username]")
@@ -978,15 +978,15 @@ connection.on('connect', function (err) {
     };
 
 
-    var UpdateNewUserInUsersTable = function (req) {
+    let UpdateNewUserInUsersTable = function (req) {
         console.log("build new promise");
 
         return new Promise(
             function (resolve, reject) {
-                var name = req.body.Username;
-                var pass = req.body.Password;
-                var country = req.body.CountryID;
-                var query = (
+                let name = req.body.Username;
+                let pass = req.body.Password;
+                let country = req.body.CountryID;
+                let query = (
                     squel.insert()
                         .into("Users")
                         .set("Username", name)
@@ -1008,7 +1008,7 @@ connection.on('connect', function (err) {
             });
     };
 
-    var UpdateSecurityQuestion = function (req) {
+    let UpdateSecurityQuestion = function (req) {
         return new Promise(
             function (resolve, reject) {
 
@@ -1028,11 +1028,11 @@ connection.on('connect', function (err) {
 
     };
 
-    var generateSecurityQuestionQuery = function (req) {
+    let generateSecurityQuestionQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
                 questions = req.body.SecurityQuestions;
-                var query = "INSERT INTO [Questions] (Username, Question, Answer ) VALUES ";
+                let query = "INSERT INTO [Questions] (Username, Question, Answer ) VALUES ";
                 for (i = 0; i < questions.length; i++) {
                     if (i > 0) {
                         query += ",";
@@ -1046,7 +1046,7 @@ connection.on('connect', function (err) {
             });
     };
 
-    var UpdateUserCategories = function (req) {
+    let UpdateUserCategories = function (req) {
         return new Promise(
             function (resolve, reject) {
 
@@ -1066,11 +1066,11 @@ connection.on('connect', function (err) {
 
     };
 
-    var generateCatgeoriesQuery = function (req) {
+    let generateCatgeoriesQuery = function (req) {
         return new Promise(
             function (resolve, reject) {
                 categories = req.body.Categories;
-                var query = "INSERT INTO [User-Categories] (Username, CategoryID ) VALUES ";
+                let query = "INSERT INTO [User-Categories] (Username, CategoryID ) VALUES ";
                 for (i = 0; i < questions.length; i++) {
                     if (i > 0) {
                         query += ",";
@@ -1083,14 +1083,14 @@ connection.on('connect', function (err) {
             });
     };
 
-    var validateLoginDetails = function (req) {
+    let validateLoginDetails = function (req) {
         return new Promise(
             function (resolve, reject) {
-            //     var name = req.body.Username;
-            //     var pass = req.body.Password;
-                var name = req.body.username;
-                var pass = req.body.password;
-                var query = (
+            //     let name = req.body.Username;
+            //     let pass = req.body.Password;
+                let name = req.body.username;
+                let pass = req.body.password;
+                let query = (
                     squel.select()
                         .from("[dbo].[Users]")
                         .where("[dbo].[Users].[Username] = \'{0}\'  AND [dbo].[Users].[Password] = \'{1}\'".replace('{0}', name)
@@ -1111,13 +1111,13 @@ connection.on('connect', function (err) {
             });
     };
 
-    var validateManagerLogin = function (req) {
+    let validateManagerLogin = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var name = req.body.Username;
-                var pass = req.body.Password;
+                let name = req.body.Username;
+                let pass = req.body.Password;
 
-                var query = (
+                let query = (
                     squel.select()
                         .from("[dbo].[Users]")
                         .where("[dbo].[Users].[Username] = \'{0}\'".replace('{0}', name))
@@ -1139,11 +1139,11 @@ connection.on('connect', function (err) {
             });
     };
 
-    var validateUserIsManagers = function (req) {
+    let validateUserIsManagers = function (req) {
         return new Promise(
             function (resolve, reject) {
-                var name = req.body.Username;
-                var query = (
+                let name = req.body.Username;
+                let query = (
                     squel.select()
                         .from("[dbo].[Users]")
                         .where("[dbo].[Users].[Username] = \'{0}\'  AND [dbo].[Users].[IsManager] = 1".replace('{0}', name))
