@@ -394,7 +394,7 @@ connection.on('connect', function (err) {
 
     app.post('/AddItem', function (req, res) {
         validateUserIsManagers(req)
-            .then(function (query) {
+            .then(function () {
                 let query = (
                     squel.insert()
                         .into("[dbo].[Beers]")
@@ -444,7 +444,7 @@ connection.on('connect', function (err) {
 
     app.post('/AddUser', function (req, res) {
         validateUserIsManagers(req)
-            .then(function (query) {
+            .then(function () {
                 let query = (
                     squel.insert()
                         .into("[dbo].[Users]")
@@ -492,7 +492,7 @@ connection.on('connect', function (err) {
 
     app.post('/GetInventory', function (req, res) {
         validateUserIsManagers(req)
-            .then(function (query) {
+            .then(function () {
                 let query = (
                     squel.select()
                         .from("[dbo].[Stock]")
@@ -520,7 +520,7 @@ connection.on('connect', function (err) {
     app.post('/UpdateInventory', function (req, res) {
 
         validateUserIsManagers(req)
-            .then(function (query) {
+            .then(function () {
                 let query = (
                     squel.update()
                         .table("[dbo].[Stock]")
