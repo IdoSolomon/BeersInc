@@ -1,9 +1,9 @@
 <h1>{{ msg }}</h1>
 <h3>This is the Login view</h3>
 
-<div class="login-container" ng-controller="loginCtrl as loginCtrl">
+<div class="login-container" ng-controller="loginController as loginController">
     <div class="login-form">
-        <form name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
+        <form name="loginForm" ng-submit="loginController.login(loginForm.$valid)" novalidate>
             <div class="form-group">
                 <label>Username</label>
                 <input type="text"
@@ -32,7 +32,7 @@
                    ng-disabled="loginForm.$invalid">
         </form>
         <div>
-            {{loginCtrl.errorMessage}}
+            {{loginController.errorMessage}}
         </div>
     </div>
 
