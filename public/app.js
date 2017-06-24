@@ -1,4 +1,8 @@
-var app = angular.module('myApp', ["ngRoute"]);
+var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule']);
+
+app.config(function (localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('node_angular_App');
+});
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('mainController', ['UserService', function (UserService) {
     var vm = this;
@@ -40,7 +44,7 @@ app.factory('UserService', ['$http', function($http) {
     service.isLoggedIn = false;
     service.login = function(user) {
 
-        return $http.post('/login', user)
+        return $http.post('http://localhost:3100/login', user)
             .then(function(response) {
                 var token = response.body.token;
                 alert(token+" token");
