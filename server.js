@@ -14,7 +14,7 @@ let app = express(); // activating express
 
 app.use(express.static(__dirname + '/public'));
 
-app.locals.users = {};
+// app.locals.users = {};
 
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origiin", "*");
@@ -63,7 +63,7 @@ connection.on('connect', function (err) {
                 // Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
                 // res.send(Cookies.get(user));
                 let token = Math.floor(Math.random() * 1000000) + 1;
-                app.locals.users[username] = token;
+                // app.locals.users[username] = token;
                 // let token = 12345;
                 res.json({ "token": token });
                 // res.send(token);
