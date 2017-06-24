@@ -61,12 +61,15 @@ connection.on('connect', function (err) {
                 // Cookies.set(user, Math.floor((Math.random() * 1000000) + 1), { expires: 7 });
                 // res.send(Cookies.get(user));
                 let token = Math.floor(Math.random() * 1000000) + 1;
-                app.locals.users[username] = token;
+                // app.locals.users[username] = token;
+                // let token = 12345;
                 res.json({ "token": token });
+                // res.send(token);
+                // res.send("success");
             })
             .catch(function (reason) {
-                // res.send(reason);
-                res.status(403).send(reason);
+                res.send(reason);
+                // res.status(403).send(reason);
             })
 
     });
