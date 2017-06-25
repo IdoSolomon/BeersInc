@@ -1,0 +1,19 @@
+
+
+<div class="products-container" ng-controller="productsController as pc">
+    <h1>{{ pc.msg }}</h1>
+    <h3>This is the Products view</h3>
+    <table>
+        <tr ng-repeat="x in pc.beers">
+            <td>{{ x.BeerName }}</td>
+            <td>{{ x.CategoryName }}</td>
+            <td>{{ x.AlcoholPercentage  }}%</td>
+            <td>{{ x.Price   }}</td>
+            <td>{{ x.Volume  }} ml</td>
+            <td>{{ x.AddedOn | date }}</td>
+            <td><img src="{{x.Picture}}" alt="Mountain View" style="width:304px;height:228px;">
+            </td>
+        </tr>
+    </table>
+
+</div>

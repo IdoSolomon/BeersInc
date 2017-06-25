@@ -260,7 +260,7 @@ connection.on('connect', function (err) {
 
     });
 
-    app.post('/GetAllProducts', function (req, res) {
+    app.get('/GetAllProducts', function (req, res) {
 
         buildGetAllProductsQuery(req)
             .then(function (query) {

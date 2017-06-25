@@ -26,7 +26,7 @@ app.factory('UserService', ['$http', function($http) {
     service.isLoggedIn = false;
     service.login = function(user) {
 
-        return $http.post('http://localhost:3100/controllers', user)
+        return $http.post('http://localhost:3100/login', user)
             .then(function(response) {
                 var token= response.data.token;
                 alert(token+" token");
@@ -51,19 +51,19 @@ app.config(['$locationProvider', function($locationProvider) {
 app.config( ['$routeProvider', function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl : "../views/home.html",
+            templateUrl : "views/home.html",
             controller : "homeCtrl"
         })
         .when("/controllers", {
-            templateUrl : "../views/loginView.html",
+            templateUrl : "views/loginView.html",
             controller : "loginController"
         })
         .when("/register", {
-            templateUrl : "../views/register.html",
+            templateUrl : "views/register.html",
             controller: "registerCtrl"
         })
         .when("/products", {
-            templateUrl : "../views/products.html",
+            templateUrl : "views/products.html",
             controller: "productsController"
         })
         .otherwise({redirect: '/',
