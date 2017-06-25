@@ -1,0 +1,17 @@
+<h1>{{ msg }}</h1>
+<h3>This is the Products view</h3>
+
+<div class="products-container" ng-controller="productsController as pc">
+    <table>
+        <tr ng-repeat="x in pc.beers">
+            <td>{{ x.Name }}</td>
+            <td>{{ x.CategoryName }}</td>
+            <td>{{ x.AlcoholPercentage  }}</td>
+            <td>{{ x.Price  }}</td>
+            <td>{{ x.Volume  }}</td>
+            <td>{{ x.AddedOn  }}</td>
+            <td>{{ x.Picture  }}</td>
+        </tr>
+    </table>
+
+</div>

@@ -22,7 +22,7 @@ app.factory('UserService', ['$http', function($http) {
     service.isLoggedIn = false;
     service.login = function(user) {
 
-        return $http.post('http://localhost:3100/login', user)
+        return $http.post('http://localhost:3100/controllers', user)
             .then(function(response) {
                 var token= response.data.token;
                 alert(token+" token");
@@ -50,13 +50,17 @@ app.config( ['$routeProvider', function($routeProvider) {
             templateUrl : "../views/home.html",
             controller : "homeCtrl"
         })
-        .when("/login", {
+        .when("/controllers", {
             templateUrl : "../views/loginView.html",
             controller : "loginController"
         })
         .when("/register", {
             templateUrl : "../views/register.html",
             controller: "registerCtrl"
+        })
+        .when("/products", {
+            templateUrl : "../views/products.html",
+            controller: "productsController"
         })
         .otherwise({redirect: '/',
         });
