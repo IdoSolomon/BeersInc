@@ -55,12 +55,12 @@ app.config( ['$routeProvider', function($routeProvider) {
             controller : "homeCtrl"
         })
         .when("/controllers", {
-            templateUrl : "views/loginView.html",
+            templateUrl : "views/login.html",
             controller : "loginController"
         })
         .when("/register", {
             templateUrl : "views/register.html",
-            controller: "registerCtrl"
+            controller: "registerController"
         })
         .when("/products", {
             templateUrl : "views/products.html",
