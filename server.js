@@ -201,8 +201,8 @@ connection.on('connect', function (err) {
 
         let query = (
             squel.select()
-                .from("Questions")
-                .field("Question")
+                .from("[dbo].[Questions]")
+                .field("[Question]")
                 .where("Username = ?", req.body.Username)
                 .toString()
         );
@@ -224,8 +224,8 @@ connection.on('connect', function (err) {
                 .from("[Users]")
                 .left_join("[dbo].[Questions]", null, "[dbo].[Users].[Username] =  [dbo].[Questions].[Username]")
                 .field("Password")
-                .where("[Users].[Username] = \'{0}\'".replace('{0}', req.body.Username).replace(' ', ''))//get username from stored value clientside
-                .where("Question = \'{0}\'".replace('{0}', req.body.Question).replace(' ', ''))//get answer from stored value clientside
+                .where("[Users].[Username] = \'{0}\'".replace('{0}', req.body.Username).replace(' ', ''))
+                .where("Question = \'{0}\'".replace('{0}', req.body.Question).replace(' ', ''))
                 .where("Answer = \'{0}\'".replace('{0}', req.body.Answer).replace(' ', ''))
                 .toString()
         );
@@ -233,7 +233,7 @@ connection.on('connect', function (err) {
         sql.Select(connection, query)
             .then(function (ans) {
                 if (ans.length > 0) {
-                    let myObj = { "CorrectAnswer": true, "Password": ans[0].trim() };
+                    let myObj = { "CorrectAnswer": true, "Password": ans[0].Password.trim() };
                     res.send(myObj);
                 }
                 else {
@@ -574,7 +574,6 @@ connection.on('connect', function (err) {
                         .where("[Username] = '{0}'".replace('{0}', req.body.UsernameDel))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -589,7 +588,6 @@ connection.on('connect', function (err) {
                         .where("[Username] = '{0}'".replace('{0}', req.body.UsernameDel))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -604,7 +602,6 @@ connection.on('connect', function (err) {
                         .where("[ID] = '{0}'".replace('{0}', req.body.BeerID))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -619,7 +616,6 @@ connection.on('connect', function (err) {
                         .where("[BeerID] = '{0}'".replace('{0}', req.body.BeerID))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -659,7 +655,6 @@ connection.on('connect', function (err) {
                         .where("[ID] = '{0}'".replace("{0}", req.body.BeerID))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -677,7 +672,6 @@ connection.on('connect', function (err) {
                     }
                     query += "(([Quantity] < \'" + items[i].Quantity + "\') AND ([BeerID] = \'" + items[i].BeerID + "\'))";
                     if (i === items.length - 1) {
-                        console.log("Query is: " + query);
                         resolve(query);
                     }
                 }
@@ -689,7 +683,6 @@ connection.on('connect', function (err) {
         return new Promise(
             function (resolve, reject) {
                 let query = "UPDATE Table_A SET Table_A.[Quantity] = (Table_A.[Quantity] - Table_B.[Quantity]) FROM [dbo].[Stock] AS Table_A INNER JOIN [dbo].[Orders] AS Table_B ON Table_A.[BeerID] = Table_B.[BeerID] WHERE Table_B.[OrderID] = '{0}'".replace("{0}", id);
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -712,7 +705,6 @@ connection.on('connect', function (err) {
                         .where("[CreditCard] = '{0}'".replace("{0}", req.body.CreditCard))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -730,7 +722,6 @@ connection.on('connect', function (err) {
                     }
                     query += "('" + id + "\', \'" + items[i].BeerID + "\', \'" + items[i].Quantity + "\')";
                     if (i === items.length - 1) {
-                        console.log("Query is: " + query);
                         resolve(query);
                     }
                 }
@@ -752,7 +743,6 @@ connection.on('connect', function (err) {
                         .where("[CreditCard] = '{0}'".replace("{0}", req.body.CreditCard))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -772,7 +762,6 @@ connection.on('connect', function (err) {
                         .set("[Total]", null)
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -799,7 +788,6 @@ connection.on('connect', function (err) {
                         + ")")
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -826,7 +814,6 @@ connection.on('connect', function (err) {
                         .where("[dbo].[User-Orders].[Username] = '{0}'".replace("{0}", req.body.Username))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -872,7 +859,6 @@ connection.on('connect', function (err) {
                         .where(strWhere)
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -894,7 +880,6 @@ connection.on('connect', function (err) {
                         .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -917,7 +902,6 @@ connection.on('connect', function (err) {
                         .where("[dbo].[Beers].[ID] = {0}".replace('{0}', req.body.BeerID))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -933,7 +917,6 @@ connection.on('connect', function (err) {
                             .replace('{1}', req.body.Quantity))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -947,7 +930,6 @@ connection.on('connect', function (err) {
                         .from("Categories")
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -968,7 +950,6 @@ connection.on('connect', function (err) {
                     "GROUP BY [Beers].ID " +
                     "ORDER BY Count(*) );";
 
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -988,7 +969,6 @@ connection.on('connect', function (err) {
                         .where("DATEDIFF(day ,[Beers].[AddedOn] ,{0}) <= 30".replace('{0}', currentDate))
                         .toString()
                 );
-                console.log("Query is: " + query);
                 resolve(query)
             }
         );
@@ -997,8 +977,6 @@ connection.on('connect', function (err) {
     };
 
     let CheckIfUniqueUserName = function (req) {
-        console.log("build new promise");
-
         return new Promise(
             function (resolve, reject) {
                 let name = req.body.Username.toString();
@@ -1009,7 +987,6 @@ connection.on('connect', function (err) {
                         .where("[Users].[Username] = " + "'" + name + "'")
                         .toString()
                 );
-                console.log("Query is: " + query);
                 sql.Select(connection, query).then(
                     function (ans) {
                         if (ans.length === 0)
@@ -1024,7 +1001,6 @@ connection.on('connect', function (err) {
 
 
     let UpdateNewUserInUsersTable = function (req) {
-        console.log("build new promise");
 
         return new Promise(
             function (resolve, reject) {
@@ -1039,7 +1015,6 @@ connection.on('connect', function (err) {
                         .set("CountryID", country)
                         .toString()
                 );
-                console.log("Query is: " + query);
 
                 sql.Insert(connection, query)
                     .then(function (succeeded) {
@@ -1084,7 +1059,6 @@ connection.on('connect', function (err) {
                     }
                     query += "('" + req.body.Username + "\', \'" + questions[i].Question.replace('\?', '') + "\', \'" + questions[i].Answer + "\')";
                     if (i === questions.length - 1) {
-                        console.log("Query is: " + query);
                         resolve(query);
                     }
                 }
