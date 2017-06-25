@@ -6,14 +6,19 @@
  */
 angular.module('myApp')
     .controller('registerController', ['UserService', "$scope", "$http", "$location", "$window",
-        function (UserService, $scope, $http) {
+        function (UserService, $scope, $http, $location) {
             var self = this;
             self.msg = 'Register';
             self.username = '';
             self.uniqueUserName = false;
-            self.alertUniqueUserName = false;
-            self.userNameApproved = false;
+            self.userNameMessage = '';
+            self.showUserNameMessage = false;
+            self.validUserName = false;
             self.password = '';
+            self.passwordMessage = '';
+            self.showPasswordMessage = false;
+            self.validPassword = false;
+
             self.question = '';
             self.answer = '';
             self.allQuestions = ['What is your pet`s name?', 'What is the first and last name of your first boyfriend ' +
@@ -58,26 +63,33 @@ angular.module('myApp')
                 });
             self.country = '';
 
-            $scope.validateUniqueUsername = function () {
+            $scope.userNameUpdate = function () {
                 if (self.username === '') {
-                    self.alertUniqueUserName = false;
-                    self.userNameApproved = false;
-
+                    self.showUserNameMessage = false;
+                    self.validUserName = false;
                     return;
 
+                }
+                if (self.username.length>8)
+                {
+                    self.showUserNameMessage = true;
+                    self.userNameMessage = "Maximum user name length permitted is 8 characters."
+                    self.validUserName = false;
+
+                    return;
                 }
                 $http.post('http://localhost:3100/IsUniqueUsername', {'Username': self.username})
                     .then(function (response) {
                             self.uniqueUserName = response.data.Ans;
                             if (self.uniqueUserName === false) {
-                                alert("User name is already taken");
-                                self.alertUniqueUserName = true;
-                                self.userNameApproved = false;
+                                self.showUserNameMessage = true;
+                                self.userNameMessage = "User name is already taken, please choose another user name. "
+                                self.validUserName = false;
 
                             }
                             else {
-                                self.alertUniqueUserName = false;
-                                self.userNameApproved = true;
+                                self.showUserNameMessage = false;
+                                self.validUserName = true;
 
                             }
                         }
@@ -85,6 +97,23 @@ angular.module('myApp')
 
             }
 
+            $scope.passwordUpdate = function () {
+                if (self.password.length>10)
+                {
+                    self.showPasswordMessage = true;
+                    self.validPassword = false;
+                    self.passwordMessage = "Maximum password length must be shorter than 10 characters."
+                    return;
+                }
+                else
+                {
+                    self.showPasswordMessage = false;
+                    self.validPassword = true;
+
+
+                }
+
+            }
             self.register = function (validDetails) {
                 // $scope.validateUniqueUsername();
                 if (validDetails === false) {
@@ -107,6 +136,7 @@ angular.module('myApp')
                             if (response.data.Succeeded==true)
                             {
                                 alert("Registration succeeded!");
+                                $location.path('/login');
                             }
                             else
                             {

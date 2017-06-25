@@ -4,19 +4,20 @@
             User Name<br>
             <input type="text"
                    ng-model="rc.username"
-                   ng-blur="validateUniqueUsername()"
+                   ng-blur="userNameUpdate()"
                    ng-required="true"
             />
-            <p ng-show="rc.alertUniqueUserName" class="help-block"> User name is already taken.
-                Please choose another name.</p>
-            <p ng-show="rc.userNameApproved" class="help-block"> User name is approved.</p>
-
+            <p ng-show="rc.showUserNameMessage" class="help-block"> {{rc.userNameMessage}}</p>
             <br>
             Password:<br>
             <input type="password"
                    ng-model="rc.password"
                    ng-required="true"
+                   ng-blur="passwordUpdate()"
+
             >
+            <p ng-show="rc.showPasswordMessage" class="help-block"> {{rc.passwordMessage}}</p>
+
             <br>
             Preferred categories
             <br>
@@ -56,10 +57,9 @@
             <input type="submit"
                    class="btn btn-success btn-lg"
                    value="Register"
-                   ng-disabled="registerForm.$invalid || rc.alertUniqueUserName== true">
+                   ng-disabled="registerForm.$invalid || !rc.validUserName || !rc.validPassword == true">
         </form>
-        <p>form = {{rc.username}}</p>
-        <p>master = {{rc.password}}</p>
+
     </div>
 
 </div>
