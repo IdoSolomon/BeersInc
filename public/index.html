@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Beers Inc.</title>
-    <script src="angularScripts/angular.js"></script>
-    <script type="text/javascript" src="angularScripts/angular-route.js"></script>
-    <script type="text/javascript" src="angularScripts/angular-local-storage.min.js"></script>
+    <script src="app/shared/angularScripts/angular.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/shared/angularScripts/angular-route.js"></script>
+    <script type="text/javascript" src="app/components/controllers/loginController.js"></script>
+    <script type="text/javascript" src="app/components/controllers/productsController.js"></script>
+
 </head>
   <body>
     <div ng-controller="mainController as mainCtrl">
       <p><a href="#/">Home</a></p>
       <a href="#/login">Login</a>
       <a href="#/register">Register</a>
+        <a href="#/products">Products</a>
 
       <p>Click on the links.</p>
     </div>
     <br>
     <br>
     <ng-view></ng-view>
-    <script src="app.js"></script>
   </body>
 </html>

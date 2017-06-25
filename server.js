@@ -260,6 +260,18 @@ connection.on('connect', function (err) {
 
     });
 
+    app.post('/GetAllProducts', function (req, res) {
+
+        buildGetAllProductsQuery(req)
+            .then(function (query) {
+                sql.Select(connection, query)
+                    .then(function (ans) {
+                        res.send(ans);
+                    })
+            })
+
+    });
+
     app.post('/Search', function (req, res) {
 
         buildSearchQuery(req)
@@ -863,6 +875,29 @@ connection.on('connect', function (err) {
             }
         );
     };
+
+    let buildGetAllProductsQuery = function (req) {
+        return new Promise(
+            function (resolve, reject) {
+                let query = (
+                    squel.select()
+                        .field("[dbo].[Beers].[Name]", "BeerName")
+                        .field("[dbo].[Categories].[Name]", "CategoryName")
+                        .field("[AlcoholPercentage]")
+                        .field("[Price]")
+                        .field("[Volume]")
+                        .field("[AddedOn]")
+                        .field("[Picture]")
+                        .from("[dbo].[Beers]")
+                        .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                        .toString()
+                );
+                console.log("Query is: " + query);
+                resolve(query)
+            }
+        );
+    };
+
 
     let buildGetItemDetailsQuery = function (req) {
         return new Promise(
