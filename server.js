@@ -73,18 +73,18 @@ connection.on('connect', function (err) {
                 let token;
                 if(username in app.locals.users)
                 {
+                    token = app.locals.users[username];
+                } else {
                     token = Math.floor(Math.random() * 1000000) + 1;
                     app.locals.users[username] = token;
-                } else {
-                    token = app.locals.users[username];
                 }
                 // let token = 12345;
-                res.json({ "token": token });
+                res.json({ "success": true, "token": token, "reason": "none" });
                 // res.send(token);
                 // res.send("success");
             })
             .catch(function (reason) {
-                res.send(reason);
+                res.json({ "success": false, "token": -1, "reason": reason });
                 // res.status(403).send(reason);
             })
 
@@ -1145,9 +1145,13 @@ connection.on('connect', function (err) {
                 sql.Select(connection, query)
                     .then(function (ans) {
                         if (ans.length === 1)
+                        {
                             resolve(true);
+                        }
                         else
+                        {
                             reject("Wrong Username/Password");
+                        }
                     })
                     .catch(function (ans) {
                         reject(ans);
