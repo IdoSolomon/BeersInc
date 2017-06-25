@@ -28,14 +28,18 @@ app.factory('UserService', ['$http', function($http) {
 
         return $http.post('http://localhost:3100/login', user)
             .then(function(response) {
+                if(response.data.success === false)
+                {
+                    return Promise.reject(response);
+                } else {
                 var token= response.data.token;
-                alert(token+" token");
-                $http.defaults.headers.common = {
-                    'my-Token': token,
-                    'user' : user.username
-                };
-                service.isLoggedIn = true;
-                return Promise.resolve(response);
+                    $http.defaults.headers.common = {
+                        'my-Token': token,
+                        'user' : user.username
+                    };
+                    service.isLoggedIn = true;
+                    return Promise.resolve(response);
+                }
             })
             .catch(function (e) {
                 return Promise.reject(e);
@@ -54,7 +58,7 @@ app.config( ['$routeProvider', function($routeProvider) {
             templateUrl : "views/home.html",
             controller : "homeCtrl"
         })
-        .when("/controllers", {
+        .when("/login", {
             templateUrl : "views/loginView.html",
             controller : "loginController"
         })
