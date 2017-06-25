@@ -1,8 +1,4 @@
 var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule']);
-
-app.config(function (localStorageServiceProvider) {
-    localStorageServiceProvider.setPrefix('node_angular_App');
-});
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('mainController', ['UserService', function (UserService) {
     var vm = this;
@@ -13,8 +9,6 @@ app.controller('homeCtrl', function () {
     var self = this;
     self.msg = 'Home';
 });
-//-------------------------------------------------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('registerCtrl', function () {
     var self = this;

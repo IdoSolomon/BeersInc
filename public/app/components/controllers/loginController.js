@@ -2,8 +2,8 @@
  * Created by Liorpe on 24/06/2017.
  */
 angular.module('myApp')
-    .controller('loginController', ['UserService', '$http', "$location", "$window", "$scope",
-        function(UserService, $http, $location, $window, $scope){
+    .controller('loginController', ['UserService', 'cookieService', '$http', "$location", "$window", "$scope",
+        function(UserService, cookieService, $http, $location, $window, $scope){
             let self = this;
             self.msg = 'Login';
             self.user = {"username": '', "password": ''};
@@ -15,9 +15,12 @@ angular.module('myApp')
             self.login = function(valid) {
                 if (valid) {
                     UserService.login(self.user).then(function (success) {
+                        self.loginState = true;
+                        cookieService.addNewCookie(self.user.username, success.data.token);
                         $window.alert('You are logged in');
                         $location.path('/');
                     }, function (error) {
+                        self.loginState = false;
                         self.errorMessage = error.data.reason;
                         $window.alert(error.data.reason);
                     })
@@ -28,7 +31,10 @@ angular.module('myApp')
                 if (valid) {
                     return $http.post('http://localhost:3100/ValidateAnswer', { "Username": self.user.username, "Question": self.question.substring(0, self.question.length-1), "Answer": self.answer })
                         .then(function(response) {
-                            self.answerOutput = response.data.Password;
+                            let pass = response.data.Password;
+                            if(pass === "")
+                                self.answerOutput = "Answer is incorrect";
+                            else self.answerOutput = "Password retrieved: " + pass;
                         }, function (error) {
                             console.error('Error while validating username')
                         });
