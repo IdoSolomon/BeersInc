@@ -1,9 +1,8 @@
-<h1>{{ msg }}</h1>
-<h3>This is the Register view</h3>
-
 <div class="register-container" ng-controller="registerCtrl as regCtrl">
     <div class="register-form">
-        <form name="registerForm" ng-submit="regCtrl.login(loginForm.$valid)" novalidate>
+        <h1>{{ regCtrl.msg }}</h1>
+        <h3>This is the Register view</h3>
+        <form name="registerForm" ng-submit="regCtrl.login(registerForm.$valid)" novalidate>
             <div class="form-group">
                 <label>Username</label>
                 <input type="text"
