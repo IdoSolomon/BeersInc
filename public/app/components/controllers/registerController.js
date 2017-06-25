@@ -6,17 +6,15 @@
  */
 angular.module('myApp')
     .controller('registerController', ['UserService', "$scope", "$http", "$location", "$window",
-        function(UserService,$scope, $http, $location, $window){
+        function(UserService,$scope, $http){
             var self = this;
             self.msg = 'Register';
             self.username ='';
             self.password ='';
-            self.q1  ='';
-            self.q2 = '';
-            self.a1 = '';
-            self.a2 = '';
+            self.question  ='';
+            self.answer = '';
             self.allQuestions = ['What is your pet`s name?', 'What is the first and last name of your first boyfriend ' +
-            'or girlfriend?', 'In which hospital were you born?' ]
+            'or girlfriend?', 'What is the name of the hospital in which you were born??' ]
             //GetCAllCategories
             $http.get('http://localhost:3100/GetCAllCategories')
                 .then(function(response) {
@@ -52,8 +50,9 @@ angular.module('myApp')
                     }
                 })
                 .then(function (response) {
-                    self.countries = response.data.Countries.Country;
+                     self.countries = response.data.Countries.Country;
                 });
+            self.country = '';
         }
 
     ]);

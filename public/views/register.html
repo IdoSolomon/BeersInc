@@ -7,6 +7,7 @@
             <input type="password" ng-model="rc.password">
             <br>
             Preferred categories
+            <br>
             <label ng-repeat="category in rc.categoies">
                 <input
                         type="checkbox"
@@ -16,17 +17,20 @@
                         ng-click="toggleSelection(category.ID)"
                 > {{category.Name}}
             </label>
+            <br>
             Your country
-            <label ng-repeat="category in rc.countries">
-                <input
-                        type="checkbox"
-                        name="selectedCategories[]"
-                        value="{{category.Name}}"
-                        ng-checked=""
-                        ng-click="toggleSelection(category.ID)"
-                > {{category.Name}}
-            </label>
-            <br><br>
+            <br>
+            <select ng-model="country" ng-options="x.Name for x in rc.countries"></select>
+            <br>
+            Question
+            <br>
+            <select ng-model="question" ng-options="x for x in rc.allQuestions"></select>
+            <br>
+            Answer
+            <br>
+            <input type="text" ng-model="rc.answer"><br>
+
+                <br><br>
             <button ng-click="reset()">RESET</button>
         </form>
         <p>form = {{rc.username}}</p>
