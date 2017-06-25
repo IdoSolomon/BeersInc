@@ -10,6 +10,7 @@ angular.module('myApp')
             var self = this;
             self.msg = 'Register';
             self.username ='';
+            self.uniqueUserName = false;
             self.password ='';
             self.question  ='';
             self.answer = '';
@@ -53,6 +54,29 @@ angular.module('myApp')
                      self.countries = response.data.Countries.Country;
                 });
             self.country = '';
+            
+            $scope.validateUniqueUsername = function () {
+                if (self.username = '')
+                    return;
+                $http.post('http://localhost:3100/IsUniqueUsername', {'Username':self.username})
+                    .then(function(response){
+                        self.uniqueUserName = response.data.Ans;
+                        if (self.uniqueUserName ===false)
+                        {
+                            alert("User name is already taken");
+                            self.username = '';
+
+                        }
+                        }
+
+                    )
+
+            }
+            
+            self.submit = function () {
+
+
+            }
         }
 
     ]);

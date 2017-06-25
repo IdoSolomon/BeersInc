@@ -2,7 +2,7 @@
     <div class="register-form">
         <form novalidate>
             User Name<br>
-            <input type="text" ng-model="rc.username"><br>
+            <input type="text" ng-model="rc.username" ng-blur="validateUniqueUsername()"><br>
             Password:<br>
             <input type="password" ng-model="rc.password">
             <br>
