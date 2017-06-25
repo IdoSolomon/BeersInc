@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule']);
+var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule', 'ngMaterial']);
 
 app.config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('node_angular_App');
