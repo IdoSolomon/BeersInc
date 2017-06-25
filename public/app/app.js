@@ -59,7 +59,7 @@ app.config( ['$routeProvider', function($routeProvider) {
             controller : "homeCtrl"
         })
         .when("/login", {
-            templateUrl : "views/loginView.html",
+            templateUrl : "views/login.html",
             controller : "loginController"
         })
         .when("/register", {

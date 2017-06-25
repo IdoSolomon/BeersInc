@@ -188,7 +188,7 @@ connection.on('connect', function (err) {
         CheckIfUniqueUserName(req)
             .then(function (reason) {
                 if (reason) {
-                    let myObj = { "Succeeded": true, "Details": "Registration succeeded!" };
+                    let myObj = { "Ans": true, "Details": "Registration succeeded!" };
                     res.send(myObj);
                 }
             })
