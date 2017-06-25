@@ -10,6 +10,7 @@
                        ng-required="true"
                        class="form-control"
                        name="usernameInput"
+                       ng-disabled="loginCtrl.showFP"
                        placeholder="Enter Username">
                 <p ng-show="loginForm.usernameInput.$invalid && !loginForm.usernameInput.$pristine" class="help-block">Username is required</p>
 
@@ -29,10 +30,17 @@
                    class="btn btn-success btn-lg"
                    value="Login"
                    ng-disabled="loginForm.$invalid">
+            <button ng-click="toggleFP()" ng-disabled="loginForm.usernameInput.$invalid">Forgot your password?</button>
         </form>
         <div>
             {{loginCtrl.errorMessage}}
         </div>
-    </div>
 
+        <div name="forgotPass" ng-show="loginCtrl.showFP">
+            <h1>Menu:</h1>
+            <div>Pizza</div>
+            <div>Pasta</div>
+            <div>Pesce</div>
+        </div>
+    </div>
 </div>
