@@ -1,10 +1,22 @@
-<div class="register-container" ng-controller="registerController as rc">
+<div class="register-container" ng-controller="registerController as rc" xmlns="http://www.w3.org/1999/html">
     <div class="register-form">
-        <form novalidate>
+        <form novalidate name="registerForm" ng-submit="rc.register(loginForm.$valid && rc.userNameApproved)">
             User Name<br>
-            <input type="text" ng-model="rc.username" ng-blur="validateUniqueUsername()"><br>
+            <input type="text"
+                   ng-model="rc.username"
+                   ng-blur="validateUniqueUsername()"
+                   ng-required="true"
+            />
+            <p ng-show="rc.alertUniqueUserName" class="help-block"> User name is already taken.
+                Please choose another name.</p>
+            <p ng-show="rc.userNameApproved" class="help-block"> User name is approved.</p>
+
+            <br>
             Password:<br>
-            <input type="password" ng-model="rc.password">
+            <input type="password"
+                   ng-model="rc.password"
+                   ng-required="true"
+            >
             <br>
             Preferred categories
             <br>
@@ -20,18 +32,31 @@
             <br>
             Your country
             <br>
-            <select ng-model="country" ng-options="x.Name for x in rc.countries"></select>
+            <select ng-model="rc.country"
+                    ng-options="x.Name for x in rc.countries"
+                    ng-required="true"
+
+            ></select>
             <br>
             Question
             <br>
-            <select ng-model="question" ng-options="x for x in rc.allQuestions"></select>
+            <select ng-model="rc.question"
+                    ng-options="x for x in rc.allQuestions"
+                    ng-required="true"
+            ></select>
             <br>
             Answer
             <br>
-            <input type="text" ng-model="rc.answer"><br>
+            <input type="text"
+                   ng-model="rc.answer"
+                   ng-required="true"
+            ><br>
 
-                <br><br>
-            <button ng-click="reset()">RESET</button>
+            <br><br>
+            <input type="submit"
+                   class="btn btn-success btn-lg"
+                   value="Register"
+                   ng-disabled="registerForm.$invalid || rc.alertUniqueUserName== true">
         </form>
         <p>form = {{rc.username}}</p>
         <p>master = {{rc.password}}</p>

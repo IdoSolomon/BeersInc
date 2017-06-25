@@ -1097,14 +1097,22 @@ connection.on('connect', function (err) {
 
                 generateCatgeoriesQuery(req)
                     .then(function (query) {
-                        console.log(query);
-                        sql.Insert(connection, query)
-                            .then(function (succeeded) {
-                                resolve(succeeded);
-                            })
-                            .catch(function (ans) {
-                                reject(ans)
-                            })
+                        if (query!='')
+                        {
+                            console.log(query);
+                            sql.Insert(connection, query)
+                                .then(function (succeeded) {
+                                    resolve(succeeded);
+                                })
+                                .catch(function (ans) {
+                                    reject(ans)
+                                })
+                        }
+                        else
+                        {
+                            resolve(true);
+                        }
+
                     })
 
             });
@@ -1116,16 +1124,18 @@ connection.on('connect', function (err) {
             function (resolve, reject) {
                 categories = req.body.Categories;
                 let query = "INSERT INTO [User-Categories] (Username, CategoryID ) VALUES ";
-                for (i = 0; i < questions.length; i++) {
+                for (i = 0; i < categories.length; i++) {
                     if (i > 0) {
                         query += ",";
                     }
                     query += "('" + req.body.Username + "\', " + categories[i] + " )";
-                    if (i === questions.length - 1) {
+                    if (i === categories.length - 1) {
                         resolve(query);
                     }
                 }
+                resolve('');
             });
+
     };
 
     let validateLoginDetails = function (req) {
