@@ -64,7 +64,7 @@ app.config( ['$routeProvider', function($routeProvider) {
         })
         .when("/register", {
             templateUrl : "views/register.html",
-            controller: "registerCtrl"
+            controller: "registerController"
         })
         .when("/products", {
             templateUrl : "views/products.html",

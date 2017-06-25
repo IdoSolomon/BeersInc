@@ -1,38 +1,40 @@
-<div class="register-container" ng-controller="registerCtrl as regCtrl">
+<div class="register-container" ng-controller="registerController as rc">
     <div class="register-form">
-        <h1>{{ regCtrl.msg }}</h1>
-        <h3>This is the Register view</h3>
-        <form name="registerForm" ng-submit="regCtrl.login(registerForm.$valid)" novalidate>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text"
-                       ng-model="loginCtrl.user.username"
-                       ng-required="true"
-                       class="form-control"
-                       name="usernameInput"
-                       placeholder="Enter Username">
-                <p ng-show="registerForm.usernameInput.$invalid && !registerForm.usernameInput.$pristine" class="help-block">Username is required</p>
+        <form novalidate>
+            User Name<br>
+            <input type="text" ng-model="rc.username"><br>
+            Password:<br>
+            <input type="password" ng-model="rc.password">
+            <br>
+            Preferred categories
+            <br>
+            <label ng-repeat="category in rc.categoies">
+                <input
+                        type="checkbox"
+                        name="selectedCategories[]"
+                        value="{{category.Name}}"
+                        ng-checked=""
+                        ng-click="toggleSelection(category.ID)"
+                > {{category.Name}}
+            </label>
+            <br>
+            Your country
+            <br>
+            <select ng-model="country" ng-options="x.Name for x in rc.countries"></select>
+            <br>
+            Question
+            <br>
+            <select ng-model="question" ng-options="x for x in rc.allQuestions"></select>
+            <br>
+            Answer
+            <br>
+            <input type="text" ng-model="rc.answer"><br>
 
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password"
-                       ng-model="loginCtrl.user.password"
-                       ng-required="true"
-                       class="form-control"
-                       name="passwordInput"
-                       placeholder="Enter Password">
-                <p ng-show="registerForm.passwordInput.$invalid && !registerForm.passwordInput.$pristine" class="help-block">Password is required</p>
-            </div>
-
-            <input type="submit"
-                   class="btn btn-success btn-lg"
-                   value="Login"
-                   ng-disabled="registerForm.$invalid">
+                <br><br>
+            <button ng-click="reset()">RESET</button>
         </form>
-        <div>
-            {{regCtrl.errorMessage}}
-        </div>
+        <p>form = {{rc.username}}</p>
+        <p>master = {{rc.password}}</p>
     </div>
 
 </div>

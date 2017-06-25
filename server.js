@@ -92,7 +92,7 @@ connection.on('connect', function (err) {
 
 
 
-    app.get('/GetCountryList', function (req, res) {
+    app.get('/GetCAllCategories', function (req, res) {
         buildGetCountriesQuerry(req)
             .then(function (query) {
                 sql.Select(connection, query)
@@ -271,6 +271,8 @@ connection.on('connect', function (err) {
             })
 
     });
+
+
 
     app.post('/Search', function (req, res) {
 
@@ -942,8 +944,7 @@ connection.on('connect', function (err) {
             function (resolve, reject) {
                 let query = (
                     squel.select()
-                        .from("Countries")
-                        .field("Name")
+                        .from("Categories")
                         .toString()
                 );
                 console.log("Query is: " + query);
