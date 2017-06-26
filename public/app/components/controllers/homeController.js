@@ -19,7 +19,10 @@ angular.module('myApp')
                                 self.hasCookie = verdict.data;
                                 if(self.hasCookie)
                                 {
-                                    $window.alert('You haz cookie');
+                                    $http.get('http://localhost:3100/GetNewProducts')
+                                        .then(function(answer) {
+                                            self.newBeers = answer.data;
+                                        })
                                 }
                             })
                     }

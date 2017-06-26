@@ -783,14 +783,15 @@ connection.on('connect', function (err) {
             function (resolve, reject) {
                 let query = (
                     squel.select()
-                        .field("[ID]")
-                        .field("[CategoryID]")
-                        .field("[Name]")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[ID]))","BeerID")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[Name]))", "BeerName")
+                        .field("LTRIM(RTRIM([dbo].[Categories].[Name]))", "CategoryName")
                         .field("[AlcoholPercentage]")
                         .field("[Price]")
                         .field("[Volume]")
                         .field("[AddedOn]")
                         .from("[dbo].[Beers]")
+                        .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
                         .where("[CategoryID] IN (" + squel.select()
                             .field("[CategoryID]")
                             .from("[dbo].[User-Categories]")
@@ -954,9 +955,9 @@ connection.on('connect', function (err) {
                 let currentDate = moment().format('YYYY-MM-DD');
                 let query = (
                     squel.select()
-                        .field("[dbo].[Beers].[ID]")
-                        .field("[dbo].[Beers].[Name]", "BeerName")
-                        .field("[dbo].[Categories].[Name]", "CategoryName")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[ID]))","BeerID")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[Name]))", "BeerName")
+                        .field("LTRIM(RTRIM([dbo].[Categories].[Name]))", "CategoryName")
                         .field("[AlcoholPercentage]")
                         .field("[Price]")
                         .field("[Volume]")
@@ -970,7 +971,7 @@ connection.on('connect', function (err) {
                                 .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
                                 .left_join("[dbo].[Orders]", null, "[dbo].[Beers].[ID] = [dbo].[Orders].[BeerID]")
                                 .left_join("[dbo].[User-Orders]", null, "[dbo].[Orders].[OrderID] = [dbo].[User-Orders].[OrderID]")
-                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,{0}) <= 7 ".replace('{0}', currentDate))
+                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,convert(datetime, '{0}')) <= 7 ".replace('{0}', currentDate))
                                 .group("[dbo].[Beers].[ID]")
                                 .order("Count(*)"))
                         .toString() + ")"
@@ -990,9 +991,17 @@ connection.on('connect', function (err) {
                 let currentDate = moment().format('YYYY-MM-DD');
                 let query = (
                     squel.select()
-                        .from("Beers")
-                        .field("LTRIM(RTRIM(Name)) AS [Beer Name],AlcoholPercentage,Price,Volume")
-                        .where("DATEDIFF(day ,[Beers].[AddedOn] ,{0}) <= 30".replace('{0}', currentDate))
+                        .field("LTRIM(RTRIM([dbo].[Beers].[ID]))","BeerID")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[Name]))", "BeerName")
+                        .field("LTRIM(RTRIM([dbo].[Categories].[Name]))", "CategoryName")
+                        .field("[AlcoholPercentage]")
+                        .field("[Price]")
+                        .field("[Volume]")
+                        .field("[AddedOn]")
+                        .field("[Picture]")
+                        .from("[dbo].[Beers]")
+                        .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                        .where("DATEDIFF(day, [Beers].[AddedOn], convert(datetime, '{0}')) <= 30".replace('{0}', currentDate))
                         .toString()
                 );
                 resolve(query)
