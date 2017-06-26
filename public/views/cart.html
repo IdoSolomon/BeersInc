@@ -7,9 +7,9 @@
         @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
     </style>
     <!-- npm install angular-material.-->
-    <h3>This is the Products view</h3>
-
-    <table>
+    <h3>This is the Cart view</h3>
+    <h2 ng-hide="cc.beersInOrder.length>0">Your cart is empty.</h2>
+    <table ng-hide="cc.beersInOrder.length==0">
         <thead>
         <tr>
             <th>Beer</th>
@@ -20,12 +20,18 @@
         <tr ng-repeat="x in cc.beersInOrder" >
             <td>{{ x.BeerName }}</td>
             <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/cc.conversionRate  | currency}}</td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
+            </td>
             <td>{{ x.Quantity }}</td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
+            </td>
             <td>
                 <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
             </td>
             <td>
-                <button type="button" ng-click="cc.removeItem(x)" class="btn btn-info btn-lg">Remove</button>
+                <button type="button" ng-click="cc.removeItem(x)" class="btn btn-info btn-lg">Remove item</button>
             </td>
         </tr>
     </table>

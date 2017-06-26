@@ -29,4 +29,16 @@ angular.module('myApp')
 
             };
 
+            $scope.increaseItemCount = function(item) {
+                cartService.addToCart(item,1);
+                self.beersInOrder = cartService.getCart();
+                self.totalPrice = cartService.getCartTotalPrice();
+            };
+
+            $scope.decreaseItemCount = function(item) {
+                cartService.removeUnitFromCart(item);
+                self.beersInOrder = cartService.getCart();
+                self.totalPrice = cartService.getCartTotalPrice();
+            };
+
         }]);

@@ -62,6 +62,22 @@ angular.module('myApp')
 
         }
 
+        this.removeUnitFromCart = function (item) {
+            var foundAt = -1;
+            for (var i=0; i<Cart.length; i++) {
+                if (item.BeerID == Cart[i].BeerID) {
+                    foundAt = i;
+                    break;
+                }
+            }
+            if (foundAt != -1) {
+
+                if(Cart[foundAt].Quantity>0)
+                    Cart[foundAt].Quantity-=1;
+            }
+
+        }
+
 
         this.getCart = function() {
             return Cart;

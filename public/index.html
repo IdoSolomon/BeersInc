@@ -40,8 +40,8 @@
       <p>Hello, {{ currentUser }}</p>
       <p>{{ lastLogin }}</p>
       <p><a href="#/">Home</a></p>
-      <a name="loginRef" href="#/login" ng-hide="loginState">Login</a>
-      <a name="logoutRef" href="/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
+      <a href="#/login" ng-hide="loginState">Login</a>
+      <a href="#/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
       <a href="#/register" ng-hide="loginState">Register</a>
       <a href="#/products">Products</a>
       <a href="#/cart" ng-hide="!loginState" >Cart</a>

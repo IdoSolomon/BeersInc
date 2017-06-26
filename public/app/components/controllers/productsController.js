@@ -22,7 +22,7 @@ angular.module('myApp')
                 .then(function(response) {
                     self.beers = response.data;
                     for (var i=0; i<self.beers.length; i++)
-                        self.beers.Quantity = 0;
+                        self.beers[i].Quantity = 0;
                 }, function (error) {
                     console.error('Error while fetching products')
                 });
@@ -34,13 +34,13 @@ angular.module('myApp')
                 $scope.showModal = true;
             };
 
-            $scope.increaseItemCount = function() {
+            $scope.increaseSelectedItemCount = function() {
                 self.selectedBeerQuantity++;
             };
             $scope.increaseItemCount = function(item) {
                 item.Quantity++;
             };
-            $scope.decreaseItemCount = function() {
+            $scope.decreaseSelectedItemCount = function() {
                 if (self.selectedBeerQuantity > 0) {
                     self.selectedBeerQuantity--;
                 }
@@ -52,6 +52,14 @@ angular.module('myApp')
             };
             self.addToCart = function () {
                 cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );
+                $window.alert('Product was successfully added to cart/');
+
+            };
+            self.addToCart = function (item) {
+                cartService.addToCart(item,item.Quantity);
+                item.Quantity = 0;
+                $window.alert('Product was successfully added to cart/');
+
             };
 
         }]);
