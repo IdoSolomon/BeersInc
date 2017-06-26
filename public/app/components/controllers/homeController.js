@@ -2,8 +2,8 @@
  * Created by Ido on 26/06/2017.
  */
 angular.module('myApp')
-    .controller('homeController', ['UserService', 'cookieService', '$http', "$location", "$window", "$scope",
-        function(UserService, cookieService, $http, $location, $window, $scope){
+    .controller('homeController', ['UserService', 'cookieService', '$http', "$location", "$window", "$rootScope", "$scope",
+        function(UserService, cookieService, $http, $location, $rootScope, $window, $scope){
             let self = this;
             // self.hasCookie = false;
             self.msg = 'Home';

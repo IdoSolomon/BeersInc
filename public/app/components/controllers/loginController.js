@@ -2,8 +2,8 @@
  * Created by Liorpe on 24/06/2017.
  */
 angular.module('myApp')
-    .controller('loginController', ['UserService', 'cookieService', '$http', "$location", "$window", "$scope",
-        function(UserService, cookieService, $http, $location, $window, $scope){
+    .controller('loginController', ['UserService', 'cookieService', '$http', "$location", "$window", "$rootScope", "$scope",
+        function(UserService, cookieService, $http, $location, $window, $rootScope, $scope){
             let self = this;
             self.msg = 'Login';
             self.user = {"username": '', "password": ''};
@@ -15,12 +15,13 @@ angular.module('myApp')
             self.login = function(valid) {
                 if (valid) {
                     UserService.login(self.user).then(function (success) {
-                        self.loginState = true;
+                        $rootScope.loginState = true;
+                        $rootScope.currentUser = self.user.username;
                         cookieService.addNewCookie(self.user.username, success.data.token);
-                        $window.alert('You are logged in');
+                        $rootScope.lastLogin = "Your last login was at " + cookieService.getCookie('user-lastVisit');
+                        $window.alert('You have successfully logged in.');
                         $location.path('/');
                     }, function (error) {
-                        self.loginState = false;
                         self.errorMessage = error.data.reason;
                         $window.alert(error.data.reason);
                     })
