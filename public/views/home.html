@@ -1,6 +1,8 @@
 <div class="home-container" ng-controller="homeController as homeCtrl">
     <h1>{{ homeCtrl.msg }}</h1>
     <h3>This is the Home view</h3>
+
+    <h2>Top Sellers</h2>
     <table>
         <tr ng-repeat="x in homeCtrl.hotBeers">
             <td>{{ x.BeerName }}</td>
@@ -16,19 +18,22 @@
             </td>
         </tr>
     </table>
-    <!--<table ng-show="homeCtrl.hasCookie">-->
-        <!--<tr ng-repeat="x in homeCtrl.newBeers">-->
-            <!--<td>{{ x.BeerName }}</td>-->
-            <!--<td>{{ x.CategoryName }}</td>-->
-            <!--<td>{{ x.AlcoholPercentage  }}%</td>-->
-            <!--<td>{{ x.Price   }}</td>-->
-            <!--<td>{{ x.Volume  }} ml</td>-->
-            <!--<td>{{ x.AddedOn | date }}</td>-->
-            <!--<td><img src="{{x.Picture}}"  style="width:304px;height:228px;">-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<button>Details</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-    <!--</table>-->
+    <div ng-show="loginState">
+        <h2>New Beers</h2>
+        <table>
+            <tr ng-repeat="x in homeCtrl.newBeers">
+                <td>{{ x.BeerName }}</td>
+                <td>{{ x.CategoryName }}</td>
+                <td>{{ x.AlcoholPercentage  }}%</td>
+                <td>{{ x.Price   }}</td>
+                <td>{{ x.Volume  }} ml</td>
+                <td>{{ x.AddedOn | date }}</td>
+                <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
+                </td>
+                <td>
+                    <button>Details</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
