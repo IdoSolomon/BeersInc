@@ -941,15 +941,29 @@ connection.on('connect', function (err) {
         return new Promise(
             function (resolve, reject) {
                 let currentDate = moment().format('YYYY-MM-DD');
-                let query = " SELECT  [Name], [AlcoholPercentage], [Price], [Volume] " +
-                    "FROM [dbo].[Beers] " +
-                    "WHERE[CategoryID] IN (" +
-                    "SELECT TOP 5 [ID] FROM [dbo].[Beers] " +
-                    "LEFT JOIN [dbo].[Orders] ON [Beers].ID=[Orders].BeerID " +
-                    "LEFT JOIN [dbo].[User-Orders] ON [Orders].OrderID=[User-Orders].OrderID " +
-                    "WHERE DATEDIFF(day ,[User-Orders].[OrderDate] ,{0}) <= 5 ".replace('{0}', currentDate) +
-                    "GROUP BY [Beers].ID " +
-                    "ORDER BY Count(*) );";
+                let query = (
+                    squel.select()
+                        .field("[dbo].[Beers].[ID]")
+                        .field("[dbo].[Beers].[Name]", "BeerName")
+                        .field("[dbo].[Categories].[Name]", "CategoryName")
+                        .field("[AlcoholPercentage]")
+                        .field("[Price]")
+                        .field("[Volume]")
+                        .field("[AddedOn]")
+                        .field("[Picture]")
+                        .from("[dbo].[Beers]")
+                        .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                        .where("[dbo].[Beers].[ID] IN (" + squel.select()
+                                .field("TOP 5 [dbo].[Beers].[ID]")
+                                .from("[dbo].[Beers]")
+                                .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                                .left_join("[dbo].[Orders]", null, "[dbo].[Beers].[ID] = [dbo].[Orders].[BeerID]")
+                                .left_join("[dbo].[User-Orders]", null, "[dbo].[Orders].[OrderID] = [dbo].[User-Orders].[OrderID]")
+                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,{0}) <= 7 ".replace('{0}', currentDate))
+                                .group("[dbo].[Beers].[ID]")
+                                .order("Count(*)"))
+                        .toString() + ")"
+                );
 
                 resolve(query)
             }
