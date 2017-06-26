@@ -57,12 +57,23 @@ connection.on('connect', function (err) {
     });
 
     let checkToken = function(username) {
-        return (username in app.locals.users);
+        let ans = username in app.locals.users;
+        return ans;
     };
 
     let validateToken = function(token, username) {
-        return(checkToken(username) && (app.locals.users[username] === token));
+        if(checkToken(username))
+            return app.locals.users[username] === token;
+        else return false;
     };
+
+    app.post('/ValidateCookie', function (req, res) {
+        let userid = req.body.userid;
+        let token = req.body.token;
+        if(userid !== null && token !== null)
+            res.send(validateToken(token, userid));
+        else res.send(false);
+    });
 
     app.post('/Login', function (req, res) {
         validateLoginDetails(req)
@@ -75,7 +86,7 @@ connection.on('connect', function (err) {
                 {
                     token = app.locals.users[username];
                 } else {
-                    token = Math.floor(Math.random() * 1000000) + 1;
+                    token = (Math.floor(Math.random() * 9999999 - 1000000 + 1) + 1000000).toString();
                     app.locals.users[username] = token;
                 }
                 // let token = 12345;
@@ -941,15 +952,29 @@ connection.on('connect', function (err) {
         return new Promise(
             function (resolve, reject) {
                 let currentDate = moment().format('YYYY-MM-DD');
-                let query = " SELECT  [Name], [AlcoholPercentage], [Price], [Volume] " +
-                    "FROM [dbo].[Beers] " +
-                    "WHERE[CategoryID] IN (" +
-                    "SELECT TOP 5 [ID] FROM [dbo].[Beers] " +
-                    "LEFT JOIN [dbo].[Orders] ON [Beers].ID=[Orders].BeerID " +
-                    "LEFT JOIN [dbo].[User-Orders] ON [Orders].OrderID=[User-Orders].OrderID " +
-                    "WHERE DATEDIFF(day ,[User-Orders].[OrderDate] ,{0}) <= 5 ".replace('{0}', currentDate) +
-                    "GROUP BY [Beers].ID " +
-                    "ORDER BY Count(*) );";
+                let query = (
+                    squel.select()
+                        .field("[dbo].[Beers].[ID]")
+                        .field("[dbo].[Beers].[Name]", "BeerName")
+                        .field("[dbo].[Categories].[Name]", "CategoryName")
+                        .field("[AlcoholPercentage]")
+                        .field("[Price]")
+                        .field("[Volume]")
+                        .field("[AddedOn]")
+                        .field("[Picture]")
+                        .from("[dbo].[Beers]")
+                        .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                        .where("[dbo].[Beers].[ID] IN (" + squel.select()
+                                .field("TOP 5 [dbo].[Beers].[ID]")
+                                .from("[dbo].[Beers]")
+                                .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
+                                .left_join("[dbo].[Orders]", null, "[dbo].[Beers].[ID] = [dbo].[Orders].[BeerID]")
+                                .left_join("[dbo].[User-Orders]", null, "[dbo].[Orders].[OrderID] = [dbo].[User-Orders].[OrderID]")
+                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,{0}) <= 7 ".replace('{0}', currentDate))
+                                .group("[dbo].[Beers].[ID]")
+                                .order("Count(*)"))
+                        .toString() + ")"
+                );
 
                 resolve(query)
             }
