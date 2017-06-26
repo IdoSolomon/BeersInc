@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule', 'ngMaterial']);
+var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule']);
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('mainController', ['UserService', function (UserService) {
     var vm = this;
