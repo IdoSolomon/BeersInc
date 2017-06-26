@@ -9,14 +9,22 @@
  <!-- npm install angular-material.-->
     <h1>{{ pc.msg }}</h1>
     <h3>This is the Products view</h3>
+    <input type="text" ng-model="pc.filterBy">
+
     <table>
-        <tr ng-repeat="x in pc.beers">
+        <thead>
+        <tr>
+            <th><a href="" ng-click="pc.fieldToOrderBy='BeerName'; pc.reverseSort = !pc.reverseSort">Name</a></th>
+            <th><a href="" ng-click="pc.fieldToOrderBy='CategoryName'; pc.reverseSort = !pc.reverseSort">Category</a></th>
+            <th><a href="" ng-click="pc.fieldToOrderBy='Price'; pc.reverseSort = !pc.reverseSort">Price</a></th>
+            <th></th>
+            <th>Details & Purchase</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="x in pc.beers  | filter : pc.filterBy |orderBy:pc.fieldToOrderBy:pc.reverseSort ">
             <td>{{ x.BeerName }}</td>
             <td>{{ x.CategoryName }}</td>
-            <td>{{ x.AlcoholPercentage  }}%</td>
-            <td>{{ x.Price   }}</td>
-            <td>{{ x.Volume  }} ml</td>
-            <td>{{ x.AddedOn | date }}</td>
+            <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/pc.conversionRate  | currency}}</td>
             <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
             </td>
             <td>
@@ -47,8 +55,8 @@
                         <br>
                         <b>Added to Site:</b> {{pc.selectedBeer.AddedOn | date}}
                         <br>
-                        <b>Price: </b> {{pc.selectedBeer.Price* pc.conversionRate | currency:"ILS "}}   /  {{pc.selectedBeer.Price
-                        | currency}}
+                        <b>Price: </b> {{pc.selectedBeer.Price | currency:"ILS "}}   /  {{pc.selectedBeer.Price/
+                        pc.conversionRate| currency}}
                         <br> <img ng-src="{{pc.selectedBeer.Picture}}"  style="width:304px;height:228px;">
 
                     </p>
@@ -57,7 +65,7 @@
                     <button type="button" class="btn btn-default" ng-click="decreaseItemCount(item)">-</button>
                     Quantity: {{pc.selectedBeerQuantity}}
                     <button type="button" class="btn btn-default" ng-click="increaseItemCount(item)">+</button>
-                    <button type="button" class="btn btn-default" ng>Add to Cart</button>
+                    <button type="button" class="btn btn-default" ng-click ="pc.addToCart()" ng-disabled="pc.selectedBeerQuantity==0" >Add to Cart</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

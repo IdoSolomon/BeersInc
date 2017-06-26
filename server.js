@@ -880,9 +880,9 @@ connection.on('connect', function (err) {
             function (resolve, reject) {
                 let query = (
                     squel.select()
-                        .field("[dbo].[Beers].[ID]")
-                        .field("[dbo].[Beers].[Name]", "BeerName")
-                        .field("[dbo].[Categories].[Name]", "CategoryName")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[ID]))","BeerID")
+                        .field("LTRIM(RTRIM([dbo].[Beers].[Name]))", "BeerName")
+                        .field("LTRIM(RTRIM([dbo].[Categories].[Name]))", "CategoryName")
                         .field("[AlcoholPercentage]")
                         .field("[Price]")
                         .field("[Volume]")

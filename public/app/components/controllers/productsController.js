@@ -2,12 +2,15 @@
  * Created by Liorpe on 24/06/2017.
  */
 angular.module('myApp')
-    .controller('productsController', ['UserService', "$http", "$location",
-        "$window", "$scope", "$window", function (UserService, $http, $location, $window, $scope,$rootScope, $mdDialog) {
+    .controller('productsController', ['UserService','cartService', "$http", "$location",
+        "$window", "$scope", "$window", function (UserService, cartService, $http, $location, $window, $scope,$rootScope, $mdDialog) {
             var self = this;
             self.msg = 'Products';
             self.selectedBeer = '';
             self.selectedBeerQuantity = 0;
+            self.filterBy = "";
+            self.fieldToOrderBy = "BeerName";
+            self.reverseSort = false;
             $http.get('http://localhost:3100/GetConversionRate')
                 .then(function(response) {
                     self.conversionRate = response.data;
@@ -35,6 +38,9 @@ angular.module('myApp')
                     self.selectedBeerQuantity--;
                 }
 
+            };
+            self.addToCart = function () {
+                cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );
             };
 
         }]);
