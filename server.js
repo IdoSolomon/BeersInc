@@ -57,12 +57,23 @@ connection.on('connect', function (err) {
     });
 
     let checkToken = function(username) {
-        return (username in app.locals.users);
+        let ans = username in app.locals.users;
+        return ans;
     };
 
     let validateToken = function(token, username) {
-        return(checkToken(username) && (app.locals.users[username] === token));
+        if(checkToken(username))
+            return app.locals.users[username] === token;
+        else return false;
     };
+
+    app.post('/ValidateCookie', function (req, res) {
+        let userid = req.body.userid;
+        let token = req.body.token;
+        if(userid !== null && token !== null)
+            res.send(validateToken(token, userid));
+        else res.send(false);
+    });
 
     app.post('/Login', function (req, res) {
         validateLoginDetails(req)
@@ -75,7 +86,7 @@ connection.on('connect', function (err) {
                 {
                     token = app.locals.users[username];
                 } else {
-                    token = Math.floor(Math.random() * 1000000) + 1;
+                    token = (Math.floor(Math.random() * 9999999 - 1000000 + 1) + 1000000).toString();
                     app.locals.users[username] = token;
                 }
                 // let token = 12345;
