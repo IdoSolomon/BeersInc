@@ -64,6 +64,10 @@ app.config( ['$routeProvider', function($routeProvider) {
             templateUrl : "views/products.html",
             controller: "productsController"
         })
+        .when("/cart", {
+            templateUrl : "views/cart.html",
+            controller: "cartController"
+        })
         .otherwise({redirect: '/',
         });
 }]);

@@ -1,0 +1,65 @@
+<head>
+    <meta charset="UTF-8">
+    <title>The Products</title>
+</head>
+<div class="cart-container" ng-controller="cartController as cc">
+    <style scoped>
+        @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+    </style>
+    <!-- npm install angular-material.-->
+    <h3>This is the Products view</h3>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Beer</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="x in cc.beersInOrder" >
+            <td>{{ x.BeerName }}</td>
+            <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/cc.conversionRate  | currency}}</td>
+            <td>{{ x.Quantity }}</td>
+            <td>
+                <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
+            </td>
+            <td>
+                <button type="button" ng-click="cc.removeItem(x)" class="btn btn-info btn-lg">Remove</button>
+            </td>
+        </tr>
+    </table>
+
+    <h2> Total  {{cc.totalPrice | currency:"ILS "}}   /  {{cc.totalPrice/cc.conversionRate  | currency}} </h2>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{cc.selectedBeer.BeerName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <b>Country of origin:</b> {{cc.selectedBeer.CategoryName}}
+                        <br>
+                        <b>Alcohol by Volume:</b> {{cc.selectedBeer.AlcoholPercentage}}%
+                        <br>
+                        <b>Added to Site:</b> {{cc.selectedBeer.AddedOn | date}}
+                        <br>
+                        <b>Price: </b> {{cc.selectedBeer.Price | currency:"ILS "}}   /  {{cc.selectedBeer.Price/
+                        cc.conversionRate| currency}}
+                        <br> <img ng-src="{{cc.selectedBeer.Picture}}"  style="width:304px;height:228px;">
+
+                    </p>
+                </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

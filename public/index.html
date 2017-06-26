@@ -24,6 +24,7 @@
     <script type="text/javascript" src="app/components/controllers/loginController.js"></script>
     <script type="text/javascript" src="app/components/controllers/productsController.js"></script>
     <script type="text/javascript" src="app/components/controllers/registerController.js"></script>
+    <script type="text/javascript" src="app/components/controllers/cartController.js"></script>
 
 
 
@@ -41,8 +42,9 @@
       <p><a href="#/">Home</a></p>
       <a name="loginRef" href="#/login" ng-hide="loginState">Login</a>
       <a name="logoutRef" href="/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
-      <a href="#/register">Register</a>
+      <a href="#/register" ng-hide="loginState">Register</a>
       <a href="#/products">Products</a>
+      <a href="#/cart" ng-hide="!loginState" >Cart</a>
 
       <p>Click on the links.</p>
     </div>

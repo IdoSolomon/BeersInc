@@ -17,12 +17,16 @@ angular.module('myApp')
                 }, function (error) {
                     console.error('Error while fetching products')
                 });
+
             $http.get('http://localhost:3100/GetAllProducts')
                 .then(function(response) {
                     self.beers = response.data;
+                    for (var i=0; i<self.beers.length; i++)
+                        self.beers.Quantity = 0;
                 }, function (error) {
                     console.error('Error while fetching products')
                 });
+
 
             $scope.open = function (beer) {
                 self.selectedBeer = beer;
@@ -30,14 +34,21 @@ angular.module('myApp')
                 $scope.showModal = true;
             };
 
-            $scope.increaseItemCount = function(item) {
+            $scope.increaseItemCount = function() {
                 self.selectedBeerQuantity++;
             };
-            $scope.decreaseItemCount = function(item) {
+            $scope.increaseItemCount = function(item) {
+                item.Quantity++;
+            };
+            $scope.decreaseItemCount = function() {
                 if (self.selectedBeerQuantity > 0) {
                     self.selectedBeerQuantity--;
                 }
-
+            };
+            $scope.decreaseItemCount = function(item) {
+                if (item.Quantity > 0) {
+                    item.Quantity--;
+                }
             };
             self.addToCart = function () {
                 cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );

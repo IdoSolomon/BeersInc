@@ -74,11 +74,12 @@ angular.module('myApp')
 
         }
 
-        this.deleteCartcalcTotalCost = function () {
+        this.getCartTotalPrice = function () {
             self.totalPrice = 0;
             for (var i=0; i< Cart.length; i++) {
-                self.totalPrice += Cart[i].Quantity;
+                self.totalPrice += Cart[i].Quantity*Cart[i].Price;
             }
+            return totalPrice;
         }
 
 

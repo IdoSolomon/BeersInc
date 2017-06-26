@@ -30,6 +30,16 @@
             <td>
                 <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
             </td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
+            </td>
+            <td>
+                <lable ng-hide="!loginState"> {{x.Quantity}} </lable>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="increaseItemCount(item)" ng-hide="!loginState">+</button>
+            </td>
+
 
         </tr>
     </table>
@@ -62,10 +72,10 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="decreaseItemCount(item)">-</button>
-                    Quantity: {{pc.selectedBeerQuantity}}
-                    <button type="button" class="btn btn-default" ng-click="increaseItemCount(item)">+</button>
-                    <button type="button" class="btn btn-default" ng-click ="pc.addToCart()" ng-disabled="pc.selectedBeerQuantity==0" >Add to Cart</button>
+                    <button type="button" class="btn btn-default" ng-click="decreaseItemCount()" ng-hide="!loginState">-</button>
+                    <lable ng-hide="!loginState"> Quantity: {{pc.selectedBeerQuantity}} </lable>
+                    <button type="button" class="btn btn-default" ng-click="increaseItemCount()" ng-hide="!loginState">+</button>
+                    <button ng-hide="!loginState" type="button" class="btn btn-default" ng-click ="pc.addToCart()" ng-disabled="pc.selectedBeerQuantity==0" data-dismiss="modal" >Add to Cart</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
