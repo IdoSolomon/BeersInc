@@ -12,6 +12,7 @@ angular.module('myApp')
         }, function (error) {
             console.error('Error while fetching products')
         });
+    // test comment
     // $scope.status = '';
     // $scope.items = [1,2,3,4,5];
     // $scope.showAlert = function(ev) {
