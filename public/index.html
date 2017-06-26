@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--controllers files-->
+    <script type="text/javascript" src="app/components/controllers/mainController.js"></script>
     <script type="text/javascript" src="app/components/controllers/homeController.js"></script>
     <script type="text/javascript" src="app/components/controllers/loginController.js"></script>
     <script type="text/javascript" src="app/components/controllers/productsController.js"></script>
@@ -34,12 +35,14 @@
 </head>
   <body>
 
-
   <div ng-controller="mainController as mainCtrl">
+      <p>Hello, {{ currentUser }}</p>
+      <p>{{ lastLogin }}</p>
       <p><a href="#/">Home</a></p>
-      <a href="#/login">Login</a>
+      <a name="loginRef" href="#/login" ng-hide="loginState">Login</a>
+      <a name="logoutRef" href="/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
       <a href="#/register">Register</a>
-        <a href="#/products">Products</a>
+      <a href="#/products">Products</a>
 
       <p>Click on the links.</p>
     </div>
