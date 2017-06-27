@@ -2,34 +2,74 @@
  * Created by Ido on 26/06/2017.
  */
 angular.module('myApp')
-    .controller('homeController', ['UserService', 'cookieService', '$http', "$location", "$window", "$rootScope", "$scope",
-        function(UserService, cookieService, $http, $location, $rootScope, $window, $scope){
+    .controller('homeController', ['UserService', 'cookieService', 'cartService', '$http', "$location", "$window", "$rootScope", "$scope",
+        function(UserService, cookieService, cartService, $http, $location, $rootScope, $window, $scope){
             let self = this;
             // self.hasCookie = false;
             self.msg = 'Home';
-            $http.get('http://localhost:3100/GetHottest5')
-                .then(function(response) {
-                    self.hotBeers = response.data;
-                    let userid = cookieService.getCookie('user-id');
-                    let token = cookieService.getCookie('user-token');
-                    if(userid !== null && token !== null)
-                    {
-                        $http.post('http://localhost:3100/ValidateCookie', { "userid": userid, "token": token })
-                            .then(function(verdict) {
-                                self.hasCookie = verdict.data;
-                                if(self.hasCookie)
-                                {
-                                    $http.get('http://localhost:3100/GetNewProducts')
-                                        .then(function(answer) {
-                                            self.newBeers = answer.data;
-                                        })
-                                }
-                            })
-                    }
+            self.selectedBeer = '';
+            self.selectedBeerQuantity = 0;
+            $http.get('http://localhost:3100/GetConversionRate')
+                .then(function(response2) {
+                    self.conversionRate = response2.data;
+                    $http.get('http://localhost:3100/GetHottest5')
+                        .then(function(response) {
+                            self.hotBeers = response.data;
+                            let userid = cookieService.getCookie('user-id');
+                            let token = cookieService.getCookie('user-token');
+                            if(userid !== null && token !== null)
+                            {
+                                $http.post('http://localhost:3100/ValidateCookie', { "userid": userid, "token": token })
+                                    .then(function(verdict) {
+                                        self.hasCookie = verdict.data;
+                                        if(self.hasCookie)
+                                        {
+                                            $http.get('http://localhost:3100/GetNewProducts')
+                                                .then(function(answer) {
+                                                    self.newBeers = answer.data;
+                                                })
+                                        }
+                                    })
+                            }
 
-                    // if cookie set recommended items (set hasCookie accordingly)
-
+                        }, function (error) {
+                            console.error('Error while fetching products')
+                        });
                 }, function (error) {
                     console.error('Error while fetching products')
                 });
+
+            $scope.open = function (beer) {
+                self.selectedBeer = beer;
+                self.selectedBeerQuantity = 0;
+                $scope.showModal = true;
+            };
+
+            $scope.increaseItemCount = function() {
+                self.selectedBeerQuantity++;
+            };
+            $scope.increaseItemCount = function(item) {
+                item.Quantity++;
+            };
+            $scope.decreaseItemCount = function() {
+                if (self.selectedBeerQuantity > 0) {
+                    self.selectedBeerQuantity--;
+                }
+            };
+            $scope.decreaseItemCount = function(item) {
+                if (item.Quantity > 0) {
+                    item.Quantity--;
+                }
+            };
+            self.addToCart = function () {
+                cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );
+                $window.alert('Product was successfully added to cart/');
+
+            };
+            self.addToCart = function (item) {
+                cartService.addToCart(item,item.Quantity);
+                item.Quantity = 0;
+                $window.alert('Product was successfully added to cart/');
+
+            };
         }]);

@@ -24,6 +24,10 @@ angular.module('myApp')
                             $rootScope.currentUser = "Guest";
                         }
                     })
+            } else {
+                $rootScope.lastLogin = "";
+                $rootScope.loginState = false;
+                $rootScope.currentUser = "Guest";
             }
             self.logout = function ()
             {

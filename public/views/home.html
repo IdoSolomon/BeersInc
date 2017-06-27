@@ -7,15 +7,25 @@
         <tr ng-repeat="x in homeCtrl.hotBeers">
             <td>{{ x.BeerName }}</td>
             <td>{{ x.CategoryName }}</td>
-            <td>{{ x.AlcoholPercentage  }}%</td>
-            <td>{{ x.Price   }}</td>
-            <td>{{ x.Volume  }} ml</td>
-            <td>{{ x.AddedOn | date }}</td>
+            <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
             <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
             </td>
             <td>
-                <button>Details</button>
+                <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
             </td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
+            </td>
+            <td>
+                <lable ng-hide="!loginState"> {{x.Quantity}} </lable>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="homeCtrl.addToCart(x)" ng-hide="!loginState">Add to cart</button>
+            </td>
+
         </tr>
     </table>
     <div ng-show="loginState">
@@ -24,16 +34,65 @@
             <tr ng-repeat="x in homeCtrl.newBeers">
                 <td>{{ x.BeerName }}</td>
                 <td>{{ x.CategoryName }}</td>
-                <td>{{ x.AlcoholPercentage  }}%</td>
-                <td>{{ x.Price   }}</td>
-                <td>{{ x.Volume  }} ml</td>
-                <td>{{ x.AddedOn | date }}</td>
+                <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
                 <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
                 </td>
                 <td>
-                    <button>Details</button>
+                    <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
                 </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
+                </td>
+                <td>
+                    <lable ng-hide="!loginState"> {{x.Quantity}} </lable>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="homeCtrl.addToCart(x)" ng-hide="!loginState">Add to cart</button>
+                </td>
+
             </tr>
         </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+        <style scoped>
+            @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+        </style>
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{homeCtrl.selectedBeer.BeerName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <b>Country of origin:</b> {{homeCtrl.selectedBeer.CategoryName}}
+                        <br>
+                        <b>Alcohol by Volume:</b> {{homeCtrl.selectedBeer.AlcoholPercentage}}%
+                        <br>
+                        <b>Added to Site:</b> {{homeCtrl.selectedBeer.AddedOn | date}}
+                        <br>
+                        <b>Price: </b> {{homeCtrl.selectedBeer.Price | currency:"ILS "}}   /  {{homeCtrl.selectedBeer.Price/
+                        homeCtrl.conversionRate| currency}}
+                        <br> <img ng-src="{{homeCtrl.selectedBeer.Picture}}"  style="width:304px;height:228px;">
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="decreaseSelectedItemCount()" ng-hide="!loginState">-</button>
+                    <lable ng-hide="!loginState"> Quantity: {{homeCtrl.selectedBeerQuantity}} </lable>
+                    <button type="button" class="btn btn-default" ng-click="increaseSelectedItemCount()" ng-hide="!loginState">+</button>
+                    <button ng-hide="!loginState" type="button" class="btn btn-default" ng-click ="homeCtrl.addToCart()" ng-disabled="homeCtrl.selectedBeerQuantity==0" data-dismiss="modal" >Add to Cart</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
