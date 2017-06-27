@@ -34,13 +34,13 @@ angular.module('myApp')
                 $scope.showModal = true;
             };
 
-            $scope.increaseSelectedItemCount = function() {
+            $scope.increaseItemCount = function() {
                 self.selectedBeerQuantity++;
             };
             $scope.increaseItemCount = function(item) {
                 item.Quantity++;
             };
-            $scope.decreaseSelectedItemCount = function() {
+            $scope.decreaseItemCount = function() {
                 if (self.selectedBeerQuantity > 0) {
                     self.selectedBeerQuantity--;
                 }
