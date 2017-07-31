@@ -5,6 +5,8 @@
     <title>Beers Inc.</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
+    <link rel="stylesheet" type="text/css" href="assets/index.css" />
+
 
     <script src="app/shared/angularScripts/angular.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
@@ -12,10 +14,11 @@
     <script type="text/javascript" src="app/shared/angularScripts/angular-route.js"></script>
     <script type="text/javascript" src="app/shared/angularScripts/angular-cookies.js"></script>
     <script type="text/javascript" src="app/shared/angularScripts/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="app/shared/angularScripts/route-styles.js"></script>
     <!--service files-->
     <script type="text/javascript" src="app/components/services/cookieService.js"></script>
     <script type="text/javascript" src="app/components/services/cartService.js"></script>
-    <!--From Lera Modal Dialog-->
+    <!--From L Modal Dialog-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--controllers files-->
@@ -36,18 +39,15 @@
 </head>
   <body>
 
-  <div ng-controller="mainController as mainCtrl">
-      <p>Hello, {{ currentUser }}</p>
+    <div id="navigation" ng-controller="mainController as mainCtrl">
+      <p id="userDisplay">Hello, {{ currentUser }}</p>
       <p>{{ lastLogin }}</p>
-      <p><a href="#/">Home</a></p>
-      <a href="#/login" ng-hide="loginState">Login</a>
-
-      <a href="#/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
-      <a href="#/register" ng-hide="loginState">Register</a>
-      <a href="#/products">Products</a>
-      <a href="#/cart" ng-hide="!loginState" >Cart</a>
-
-      <p>Click on the links.</p>
+      <p><a class="viewLink" href="#/">Home</a></p>
+      <a class="viewLink" href="#/login" ng-hide="loginState">Login</a>
+      <a class="viewLink" href="#/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
+      <a class="viewLink" href="#/register" ng-hide="loginState">Register</a>
+      <a class="viewLink" href="#/products">Products</a>
+      <a class="viewLink" href="#/cart" ng-hide="!loginState" >Cart</a>
     </div>
     <br>
     <br>

@@ -1,0 +1,37 @@
+.form-control {
+    display: block;
+    width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form {
+    text-align: center;
+}
+
+.btn {
+    background-color: #3abdc8;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: initial;
+    filter: initial;
+    -ms-filter: initial;
+    margin: 0 auto;
+}
+
+.help-block {
+    text-align: center;
+}
+
+.label {
+    text-align: center;
+}
+
+.h1 {
+    text-align: center;
+}

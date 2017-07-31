@@ -1,6 +1,5 @@
 <div class="login-container" ng-controller="loginController as loginCtrl">
     <h1>{{ loginCtrl.msg }}</h1>
-    <h3>This is the Login view</h3>
     <div class="login-form">
 
         <form name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
@@ -26,12 +25,11 @@
                        placeholder="Enter Password">
                 <p ng-show="loginForm.passwordInput.$invalid && !loginForm.passwordInput.$pristine" class="help-block">Password is required</p>
             </div>
-
             <input type="submit"
-                   class="btn btn-success btn-lg"
-                   value="Login"
-                   ng-disabled="loginForm.$invalid">
-            <button ng-click="toggleFP()" ng-disabled="loginForm.usernameInput.$invalid">Forgot your password?</button>
+                       class="btn btn-success btn-lg"
+                       value="Login"
+                       ng-disabled="loginForm.$invalid">
+            <button class="btn" ng-click="toggleFP()" ng-disabled="loginForm.usernameInput.$invalid">Forgot your password?</button>
         </form>
         <div>
             {{loginCtrl.errorMessage}}

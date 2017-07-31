@@ -3,11 +3,10 @@
     <title>The Products</title>
 </head>
 <div class="cart-container" ng-controller="cartController as cc">
-    <style scoped>
-        @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
-    </style>
+    <!--<style scoped>-->
+        <!--@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";-->
+    <!--</style>-->
     <!-- npm install angular-material.-->
-    <h3>This is the Cart view</h3>
     <h2 ng-hide="cc.beersInOrder.length>0">Your cart is empty.</h2>
     <table ng-hide="cc.beersInOrder.length==0">
         <thead>

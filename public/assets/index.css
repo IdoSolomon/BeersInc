@@ -1,0 +1,42 @@
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+body {
+    background: url(bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: initial;
+}
+
+#navigation  {
+    display: block;
+    width: 100%;
+    height: 115px;
+    background-color: rgba(255, 152, 35, 0.8);
+    z-index: 999;
+}
+
+#userDisplay {
+    font-family: Garamond;
+    font-size: 20px;
+}
+
+.viewLink {
+    /*font-family: "Trebuchet MS";*/
+    /*font-size: 20px;*/
+    /*text-decoration: none;*/
+    background-color: #3abdc8;
+    color: white;
+    padding: 5px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.viewLink:hover {
+
+}
+
+.viewLink:active {
+
+}
