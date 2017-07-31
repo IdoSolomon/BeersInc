@@ -12,7 +12,7 @@ angular.module('myApp')
                     self.conversionRate = response.data;
                 }, function (error) {
                     console.error('Error while fetching products')
-                });
+                })  ;
 
             self.totalPrice = cartService.getCartTotalPrice();
 
