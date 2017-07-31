@@ -42,7 +42,10 @@
     <div id="navigation" ng-controller="mainController as mainCtrl">
       <p id="userDisplay">Hello, {{ currentUser }}</p>
       <p>{{ lastLogin }}</p>
-      <p><a class="viewLink" href="#/">Home</a></p>
+      <a class="viewLink" href="#/">
+          <img src="assets/home.gif" style="width:200px;height:100px;border:0;">
+      </a>
+    <br>
       <a class="viewLink" href="#/login" ng-hide="loginState">Login</a>
       <a class="viewLink" href="#/" ng-click="mainCtrl.logout()" ng-hide="!loginState">Logout</a>
       <a class="viewLink" href="#/register" ng-hide="loginState">Register</a>
