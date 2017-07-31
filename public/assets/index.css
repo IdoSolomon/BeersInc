@@ -11,26 +11,30 @@ body {
 #navigation  {
     display: block;
     width: 100%;
-    height: 115px;
-    background-color: rgba(255, 152, 35, 0.8);
+    height: 200px;
+    background-color: rgba(35, 47, 62, 0.9);
     z-index: 999;
 }
 
 #userDisplay {
     font-family: Garamond;
-    font-size: 20px;
+    font-size: 25px;
+    color: white;
 }
 
 .viewLink {
     /*font-family: "Trebuchet MS";*/
     /*font-size: 20px;*/
     /*text-decoration: none;*/
-    background-color: #3abdc8;
+    background-color: rgba(254, 189, 105,1);
     color: white;
     padding: 5px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    color: black;
+    font-size: 30px;
+
 }
 
 .viewLink:hover {

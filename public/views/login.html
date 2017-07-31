@@ -1,17 +1,19 @@
 <div class="login-container" ng-controller="loginController as loginCtrl">
-    <h1>{{ loginCtrl.msg }}</h1>
     <div class="login-form">
-
+        <h1>{{ loginCtrl.msg }}</h1>
         <form name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
             <div class="form-group">
-                <label>Username</label>
+                <label >Username</label>
                 <input type="text"
                        ng-model="loginCtrl.user.username"
                        ng-required="true"
                        class="form-control"
                        name="usernameInput"
                        ng-disabled="loginCtrl.showFP"
-                       placeholder="Enter Username">
+                       placeholder="Enter Username"
+                id="user_name_input"
+                       align="left"
+                >
                 <p ng-show="loginForm.usernameInput.$invalid && !loginForm.usernameInput.$pristine" class="help-block">Username is required</p>
 
             </div>
@@ -25,11 +27,14 @@
                        placeholder="Enter Password">
                 <p ng-show="loginForm.passwordInput.$invalid && !loginForm.passwordInput.$pristine" class="help-block">Password is required</p>
             </div>
-            <input type="submit"
+            <div id="login_buttons_div">
+                <input type="submit"
                        class="btn btn-success btn-lg"
                        value="Login"
-                       ng-disabled="loginForm.$invalid">
-            <button class="btn" ng-click="toggleFP()" ng-disabled="loginForm.usernameInput.$invalid">Forgot your password?</button>
+                       ng-disabled="loginForm.$invalid"
+                       id="login_button">
+                <button class="btn" id="forgot_password_button" ng-click="toggleFP()" ng-disabled="loginForm.usernameInput.$invalid">Forgot your password?</button>
+            </div>
         </form>
         <div>
             {{loginCtrl.errorMessage}}
