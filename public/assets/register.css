@@ -1,0 +1,20 @@
+#warning {
+    text-align: center;
+    font-weight: bold;
+    color: #c60008;
+}
+
+.btn {
+    background-color: #3abdc8;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: initial;
+    filter: initial;
+    -ms-filter: initial;
+    margin: 0 auto;
+}

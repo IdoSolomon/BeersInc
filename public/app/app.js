@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'LocalStorageModule']);
+var app = angular.module('myApp', ['ngRoute', 'routeStyles', 'LocalStorageModule']);
 //-------------------------------------------------------------------------------------------------------------------
 app.controller('mainController', ['UserService', function (UserService) {
     var vm = this;
@@ -50,23 +50,28 @@ app.config( ['$routeProvider', function($routeProvider) {
     $routeProvider
         .when("/", {
             templateUrl : "views/home.html",
-            controller : "homeCtrl"
+            controller : "homeCtrl",
+            css : "assets/home.css"
         })
         .when("/login", {
             templateUrl : "views/login.html",
-            controller : "loginController"
+            controller : "loginController",
+            css : "assets/login.css"
         })
         .when("/register", {
             templateUrl : "views/register.html",
-            controller: "registerController"
+            controller: "registerController",
+            css : "assets/register.css"
         })
         .when("/products", {
             templateUrl : "views/products.html",
-            controller: "productsController"
+            controller: "productsController",
+            css : "assets/products.css"
         })
         .when("/cart", {
             templateUrl : "views/cart.html",
-            controller: "cartController"
+            controller: "cartController",
+            css : "assets/cart.css"
         })
         .otherwise({redirect: '/',
         });
