@@ -5,6 +5,10 @@ angular.module('myApp')
     .controller('cartController', ['UserService','cartService', "$http", "$location",
         "$window", "$scope", "$window", function (UserService, cartService, $http, $location, $window, $scope,$rootScope, $mdDialog) {
             var self = this;
+            $scope.tdStyle = {
+                "font-size" : "24px",
+                "font-weight" : "bold"
+            };
             self.selectedBeer='';
             self.beersInOrder = cartService.getCart();
             $http.get('http://localhost:3100/GetConversionRate')

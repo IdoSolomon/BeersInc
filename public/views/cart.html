@@ -11,18 +11,18 @@
     <table ng-hide="cc.beersInOrder.length==0">
         <thead>
         <tr>
-            <th>Beer</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th ng-style="tdStyle">Beer</th>
+            <th ng-style="tdStyle">Price</th>
+            <th ng-style="tdStyle">Quantity</th>
         </tr>
         </thead>
         <tr ng-repeat="x in cc.beersInOrder" >
-            <td>{{ x.BeerName }}</td>
-            <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/cc.conversionRate  | currency}}</td>
+            <td ng-style="tdStyle">{{ x.BeerName }}</td>
+            <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/cc.conversionRate  | currency}}</td>
             <td>
                 <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
             </td>
-            <td>{{ x.Quantity }}</td>
+            <td ng-style="tdStyle">{{ x.Quantity }}</td>
             <td>
                 <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
             </td>
@@ -55,8 +55,7 @@
                         <br>
                         <b>Added to Site:</b> {{cc.selectedBeer.AddedOn | date}}
                         <br>
-                        <b>Price: </b> {{cc.selectedBeer.Price | currency:"ILS "}}   /  {{cc.selectedBeer.Price/
-                        cc.conversionRate| currency}}
+                        <b>Price: </b> {{cc.selectedBeer.Price | currency:"ILS "}}   /  {{cc.selectedBeer.Price/cc.conversionRate| currency}}
                         <br> <img ng-src="{{cc.selectedBeer.Picture}}"  style="width:304px;height:228px;">
 
                     </p>

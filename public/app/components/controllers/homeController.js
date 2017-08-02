@@ -7,6 +7,10 @@ angular.module('myApp')
             let self = this;
             // self.hasCookie = false;
             self.msg = 'Home';
+            $scope.tdStyle = {
+                "font-size" : "24px",
+                "font-weight" : "bold"
+            };
             self.selectedBeer = '';
             self.selectedBeerQuantity = 0;
             $http.get('http://localhost:3100/GetConversionRate')

@@ -8,22 +8,22 @@
 
  <!-- npm install angular-material.-->
     <h1>{{ pc.msg }}</h1>
-    <input type="text" ng-model="pc.filterBy">
+    <input id="filter" type="text" ng-model="pc.filterBy">
 
     <table>
         <thead>
         <tr>
-            <th><a href="" ng-click="pc.fieldToOrderBy='BeerName'; pc.reverseSort = !pc.reverseSort">Name</a></th>
-            <th><a href="" ng-click="pc.fieldToOrderBy='CategoryName'; pc.reverseSort = !pc.reverseSort">Category</a></th>
-            <th><a href="" ng-click="pc.fieldToOrderBy='Price'; pc.reverseSort = !pc.reverseSort">Price</a></th>
-            <th></th>
-            <th>Details & Purchase</th>
+            <th ng-style="tdStyle"><a href="" ng-click="pc.fieldToOrderBy='BeerName'; pc.reverseSort = !pc.reverseSort">Name</a></th>
+            <th ng-style="tdStyle"><a href="" ng-click="pc.fieldToOrderBy='CategoryName'; pc.reverseSort = !pc.reverseSort">Category</a></th>
+            <th ng-style="tdStyle"><a href="" ng-click="pc.fieldToOrderBy='Price'; pc.reverseSort = !pc.reverseSort">Price</a></th>
+            <th ng-style="tdStyle"></th>
+            <th ng-style="tdStyle">Details & Purchase</th>
         </tr>
         </thead>
         <tr ng-repeat="x in pc.beers  | filter : pc.filterBy |orderBy:pc.fieldToOrderBy:pc.reverseSort ">
-            <td>{{ x.BeerName }}</td>
-            <td>{{ x.CategoryName }}</td>
-            <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/pc.conversionRate  | currency}}</td>
+            <td ng-style="tdStyle">{{ x.BeerName }}</td>
+            <td ng-style="tdStyle">{{ x.CategoryName }}</td>
+            <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/pc.conversionRate  | currency}}</td>
             <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
             </td>
             <td>
@@ -33,7 +33,7 @@
                 <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
             </td>
             <td>
-                <lable ng-hide="!loginState"> {{x.Quantity}} </lable>
+                <lable ng-style="tdStyle" ng-hide="!loginState"> {{x.Quantity}} </lable>
             </td>
             <td>
                 <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
@@ -41,7 +41,6 @@
             <td>
                 <button type="button" class="btn btn-default" ng-click="pc.addToCart(x)" ng-hide="!loginState">Add to cart</button>
             </td>
-
         </tr>
     </table>
 

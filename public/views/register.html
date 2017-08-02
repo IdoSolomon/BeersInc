@@ -2,17 +2,19 @@
     <p id="warning">THIS WEBSITE WAS BUILT AS PART OF AN ACADEMIC ASSIGNMENT! IT IS NOT REAL! DO NOT REGISTER USING REAL IDENTIFICATION!</p>
     <div class="register-form">
         <form novalidate name="registerForm" ng-submit="rc.register(loginForm.$valid && rc.userNameApproved)">
-            User Name<br>
+            <label>User Name</label><br>
             <input type="text"
                    ng-model="rc.username"
+                   class="form-control"
                    ng-blur="userNameUpdate()"
                    ng-required="true"
             />
             <p ng-show="rc.showUserNameMessage" class="help-block"> {{rc.userNameMessage}}</p>
             <br>
-            Password:<br>
+            <label>Password:</label><br>
             <input type="password"
                    ng-model="rc.password"
+                   class="form-control"
                    ng-required="true"
                    ng-blur="passwordUpdate()"
 
@@ -20,9 +22,9 @@
             <p ng-show="rc.showPasswordMessage" class="help-block"> {{rc.passwordMessage}}</p>
 
             <br>
-            Preferred categories
+            <label>Preferred categories</label>
             <br>
-            <label ng-repeat="category in rc.categoies">
+            <label class="checkboxVal" ng-repeat="category in rc.categoies">
                 <input
                         type="checkbox"
                         name="selectedCategories[]"
@@ -32,24 +34,27 @@
                 > {{category.Name}}
             </label>
             <br>
-            Your country
+            <label>Your country</label>
             <br>
             <select ng-model="rc.country"
+                    class="form-control"
                     ng-options="x.Name for x in rc.countries"
                     ng-required="true"
 
             ></select>
             <br>
-            Question
+            <label>Question</label>
             <br>
             <select ng-model="rc.question"
+                    class="form-control"
                     ng-options="x for x in rc.allQuestions"
                     ng-required="true"
             ></select>
             <br>
-            Answer
+            <label>Answer</label>
             <br>
             <input type="text"
+                   class="form-control"
                    ng-model="rc.answer"
                    ng-required="true"
             ><br>
@@ -58,6 +63,7 @@
             <input type="submit"
                    class="btn btn-success btn-lg"
                    value="Register"
+                   id="register_button"
                    ng-disabled="registerForm.$invalid || !rc.validUserName || !rc.validPassword == true">
         </form>
 

@@ -5,6 +5,7 @@ angular.module('myApp')
     .controller('loginController', ['UserService', 'cookieService', '$http', "$location", "$window", "$rootScope", "$scope",
         function(UserService, cookieService, $http, $location, $window, $rootScope, $scope){
             let self = this;
+            $scope.button = "Forgot your password?";
             self.msg = 'Login';
             self.user = {"username": '', "password": ''};
             self.showFP = false;
@@ -49,9 +50,11 @@ angular.module('myApp')
                     self.question = '';
                     self.answer = '';
                     self.validUser = false;
+                    $scope.button = "Forgot your password?";
                 }
                 else {
                     let req = { "Username": self.user.username };
+                    $scope.button = "Try a different username?";
                     return $http.post('http://localhost:3100/IsUniqueUsername', req)
                         .then(function(response) {
                             self.validUser = !response.data.Ans;

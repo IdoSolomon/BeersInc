@@ -11,6 +11,10 @@ angular.module('myApp')
             self.filterBy = "";
             self.fieldToOrderBy = "BeerName";
             self.reverseSort = false;
+            $scope.tdStyle = {
+                "font-size" : "24px",
+                "font-weight" : "bold"
+            };
             $http.get('http://localhost:3100/GetConversionRate')
                 .then(function(response) {
                     self.conversionRate = response.data;
