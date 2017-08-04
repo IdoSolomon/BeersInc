@@ -9,6 +9,8 @@
     display: inline-block;
     margin-right:5px;
     margin-left:5px;
+    margin-bottom: 5px;
+
 }
 
 .btn:hover, .btn:active, .btn:visited {
@@ -22,10 +24,24 @@
     display: inline-block;
     margin-right:5px;
     margin-left:5px;
+    margin-bottom: 5px;
 }
 
 #filter {
     display: block;
     width: 440px;
     font-size:24px;
+}
+
+lable {
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 24px;
+    margin-right:5px;
+    margin-left:5px;
+    margin-bottom: 5px;
+
+
+
 }

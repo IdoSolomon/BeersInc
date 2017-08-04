@@ -24,7 +24,7 @@
             <td ng-style="tdStyle">{{ x.BeerName }}</td>
             <td ng-style="tdStyle">{{ x.CategoryName }}</td>
             <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/pc.conversionRate  | currency}}</td>
-            <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
+            <td><img ng-src="{{x.Picture}}"    style="width:150px;height:295px;">
             </td>
             <td>
                 <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
@@ -67,7 +67,7 @@
                         <br>
                         <b>Price: </b> {{pc.selectedBeer.Price | currency:"ILS "}}   /  {{pc.selectedBeer.Price/
                         pc.conversionRate| currency}}
-                        <br> <img ng-src="{{pc.selectedBeer.Picture}}"  style="width:304px;height:228px;">
+                        <br> <img ng-src="{{pc.selectedBeer.Picture}}" style="width:150px;height:295px;">
 
                     </p>
                 </div>
@@ -75,6 +75,7 @@
                     <button type="button" class="btn btn-default" ng-click="decreaseSelectedItemCount()" ng-hide="!loginState">-</button>
                     <lable ng-hide="!loginState"> Quantity: {{pc.selectedBeerQuantity}} </lable>
                     <button type="button" class="btn btn-default" ng-click="increaseSelectedItemCount()" ng-hide="!loginState">+</button>
+                    <br>
                     <button ng-hide="!loginState" type="button" class="btn btn-default" ng-click ="pc.addToCart()" ng-disabled="pc.selectedBeerQuantity==0" data-dismiss="modal" >Add to Cart</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

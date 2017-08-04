@@ -788,6 +788,7 @@ connection.on('connect', function (err) {
                         .field("LTRIM(RTRIM([dbo].[Categories].[Name]))", "CategoryName")
                         .field("[AlcoholPercentage]")
                         .field("[Price]")
+                        .field("[Picture]")
                         .field("[Volume]")
                         .field("[AddedOn]")
                         .from("[dbo].[Beers]")
@@ -971,12 +972,12 @@ connection.on('connect', function (err) {
                                 .left_join("[dbo].[Categories]", null, "[dbo].[Beers].[CategoryID] = [dbo].[Categories].[ID]")
                                 .left_join("[dbo].[Orders]", null, "[dbo].[Beers].[ID] = [dbo].[Orders].[BeerID]")
                                 .left_join("[dbo].[User-Orders]", null, "[dbo].[Orders].[OrderID] = [dbo].[User-Orders].[OrderID]")
-                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,convert(datetime, '{0}')) <= 7 ".replace('{0}', currentDate))
+                                .where("DATEDIFF(day ,[User-Orders].[OrderDate] ,convert(datetime, '{0}')) <= 15 ".replace('{0}', currentDate))
                                 .group("[dbo].[Beers].[ID]")
                                 .order("Count(*)"))
                         .toString() + ")"
                 );
-
+                console.log(query)
                 resolve(query)
             }
         );

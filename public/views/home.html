@@ -1,13 +1,16 @@
 <div class="home-container" ng-controller="homeController as homeCtrl">
-    <h1>{{ homeCtrl.msg }}</h1>
 
-    <h2>Top Sellers</h2>
-    <table>
+    <h2>Top Sellers
+        <button type="button" class="btn btn-default" ng-click="homeCtrl.displayHotBeers()">
+            {{ !homeCtrl.areHotBeerDisplayed ? 'Show Me!' : 'Close'}}
+        </button>
+    </h2>
+    <table ng-show="homeCtrl.areHotBeerDisplayed">
         <tr ng-repeat="x in homeCtrl.hotBeers">
             <td ng-style="tdStyle">{{ x.BeerName }}</td>
             <td ng-style="tdStyle">{{ x.CategoryName }}</td>
             <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
-            <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
+            <td><img ng-src="{{x.Picture}}" style="width:150px;height:295px;">
             </td>
             <td>
                 <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
@@ -27,14 +30,22 @@
 
         </tr>
     </table>
+
+
     <div ng-show="loginState">
-        <h2>New Beers</h2>
-        <table>
-            <tr ng-repeat="x in homeCtrl.newBeers">
-                <td>{{ x.BeerName }}</td>
-                <td>{{ x.CategoryName }}</td>
-                <td>{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
-                <td><img ng-src="{{x.Picture}}"  style="width:304px;height:228px;">
+
+        <h2>Recommended For You
+            <button type="button" class="btn btn-default" ng-click="homeCtrl.displayRecommendedBeers()">
+                {{ !homeCtrl.areRecommendedBeerDisplayed ? 'Show Me!' : 'Close'}}
+            </button>
+        </h2>
+
+        <table ng-show="homeCtrl.areRecommendedBeerDisplayed">
+            <tr ng-repeat="x in homeCtrl.recommendedBeers">
+                <td ng-style="tdStyle">{{ x.BeerName }}</td>
+                <td ng-style="tdStyle">{{ x.CategoryName }}</td>
+                <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
+                <td><img ng-src="{{x.Picture}}" style="width:150px;height:295px;">
                 </td>
                 <td>
                     <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
@@ -43,7 +54,7 @@
                     <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
                 </td>
                 <td>
-                    <lable ng-hide="!loginState"> {{x.Quantity}} </lable>
+                    <lable ng-style="tdStyle" ng-hide="!loginState"> {{x.Quantity}} </lable>
                 </td>
                 <td>
                     <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
@@ -54,13 +65,47 @@
 
             </tr>
         </table>
+
+        <h2>New Beers
+            <button type="button" class="btn btn-default" ng-click="homeCtrl.displayNewBeers()">
+                {{ !homeCtrl.areNewBeerDisplayed ? 'Show Me!' : 'Close'}}
+            </button>
+        </h2>
+
+
+        <div id="newBeersDiv" ng-show="homeCtrl.areNewBeerDisplayed">
+            <table>
+                <tr ng-repeat="x in homeCtrl.newBeers">
+                    <td ng-style="tdStyle">{{ x.BeerName }}</td>
+                    <td ng-style="tdStyle">{{ x.CategoryName }}</td>
+                    <td ng-style="tdStyle">{{x.Price | currency:"ILS "}}   /  {{x.Price/homeCtrl.conversionRate  | currency}}</td>
+                    <td><img ng-src="{{x.Picture}}" style="width:150px;height:295px;">
+                    </td>
+                    <td>
+                        <button type="button" ng-click="open(x)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Details</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-default" ng-click="decreaseItemCount(x)" ng-hide="!loginState">-</button>
+                    </td>
+                    <td>
+                        <lable ng-style="tdStyle" ng-hide="!loginState"> {{x.Quantity}} </lable>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-default" ng-click="increaseItemCount(x)" ng-hide="!loginState">+</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-default" ng-click="homeCtrl.addToCart(x)" ng-hide="!loginState">Add to cart</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
         <!--<style scoped>-->
-            <!--@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";-->
+        <!--@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";-->
         <!--</style>-->
         <div class="modal-dialog">
             <!-- Modal content-->

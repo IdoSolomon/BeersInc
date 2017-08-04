@@ -31,9 +31,15 @@ angular.module('myApp')
                                             $http.get('http://localhost:3100/GetNewProducts')
                                                 .then(function(answer) {
                                                     self.newBeers = answer.data;
+                                                    $http.post('http://localhost:3100/GetRecommended', {"Username":userid})
+                                                        .then(function(answer) {
+                                                            self.recommendedBeers = answer.data;
+                                                        })
                                                 })
+
                                         }
                                     })
+
                             }
 
                         }, function (error) {
@@ -76,4 +82,19 @@ angular.module('myApp')
                 $window.alert('Product was successfully added to cart/');
 
             };
+            self.areNewBeerDisplayed = false;
+            self.displayNewBeers = function () {
+                self.areNewBeerDisplayed = !self.areNewBeerDisplayed;
+
+            }
+            self.areHotBeerDisplayed = false;
+            self.displayHotBeers = function () {
+                self.areHotBeerDisplayed = !self.areHotBeerDisplayed;
+
+            }
+            self.areRecommendedBeerDisplayed = false;
+            self.displayRecommendedBeers = function () {
+                self.areRecommendedBeerDisplayed = !self.areRecommendedBeerDisplayed;
+
+            }
         }]);
