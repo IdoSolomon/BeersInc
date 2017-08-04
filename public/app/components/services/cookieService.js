@@ -2,7 +2,7 @@ angular.module('myApp')
     .service('cookieService', cookieService);
 
 
-function cookieService (localStorageService) {
+function cookieService (localStorageService ) {
 
     this.addNewCookie = function (username, token) {
         let expireDate = new Date();
@@ -24,7 +24,8 @@ function cookieService (localStorageService) {
     };
 
     this.removeAll = function () {
-        localStorageService.cookie.remove('user-id');
+        // Leave the user-id in the cookie so I can erease the cart when a new user comesx
+        // localStorageService.cookie.remove('user-id');
         localStorageService.cookie.remove('user-token');
         localStorageService.cookie.remove('user-lastVisit');
 

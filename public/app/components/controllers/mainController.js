@@ -37,4 +37,8 @@ angular.module('myApp')
                 cookieService.removeAll();
                 $window.alert('You have successfully logged out.');
             };
+
+            $rootScope.open = function () {
+                $rootScope.showModal = true;
+            };
         }]);

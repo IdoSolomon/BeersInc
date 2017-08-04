@@ -2,8 +2,8 @@
  * Created by Liorpe on 24/06/2017.
  */
 angular.module('myApp')
-    .controller('loginController', ['UserService', 'cookieService', '$http', "$location", "$window", "$rootScope", "$scope",
-        function(UserService, cookieService, $http, $location, $window, $rootScope, $scope){
+    .controller('loginController', ['UserService', 'cookieService', 'cartService', '$http', "$location", "$window", "$rootScope", "$scope",
+        function(UserService, cookieService,cartService, $http, $location, $window, $rootScope, $scope){
             let self = this;
             $scope.button = "Forgot your password?";
             self.msg = 'Login';
@@ -18,6 +18,9 @@ angular.module('myApp')
                     UserService.login(self.user).then(function (success) {
                         $rootScope.loginState = true;
                         $rootScope.currentUser = self.user.username;
+                        prevUser = cookieService.getCookie('user-id');
+                        if (prevUser !== $rootScope.currentUser)
+                            cartService.deleteCart();
                         cookieService.addNewCookie(self.user.username, success.data.token);
                         $rootScope.lastLogin = "Your last login was at " + cookieService.getCookie('user-lastVisit');
                         $window.alert('You have successfully logged in.');

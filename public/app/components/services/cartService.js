@@ -86,7 +86,7 @@ angular.module('myApp')
 
         this.deleteCart = function () {
             Cart = [];
-            localStorageService.remove('cart');
+            localStorageService.set('cart', Cart);
 
         }
 
