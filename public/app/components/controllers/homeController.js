@@ -19,6 +19,8 @@ angular.module('myApp')
                     $http.get('http://localhost:3100/GetHottest5')
                         .then(function(response) {
                             self.hotBeers = response.data;
+                            for (var i=0; i<self.hotBeers.length; i++)
+                                self.hotBeers[i].Quantity = 0;
                             let userid = cookieService.getCookie('user-id');
                             let token = cookieService.getCookie('user-token');
                             if(userid !== null && token !== null)
@@ -31,9 +33,14 @@ angular.module('myApp')
                                             $http.get('http://localhost:3100/GetNewProducts')
                                                 .then(function(answer) {
                                                     self.newBeers = answer.data;
+                                                    for (var i=0; i<self.newBeers.length; i++)
+                                                        self.newBeers[i].Quantity = 0;
                                                     $http.post('http://localhost:3100/GetRecommended', {"Username":userid})
                                                         .then(function(answer) {
                                                             self.recommendedBeers = answer.data;
+                                                            for (var i=0; i<self.recommendedBeers.length; i++)
+                                                                self.recommendedBeers[i].Quantity = 0;
+
                                                         })
                                                 })
 
@@ -55,13 +62,13 @@ angular.module('myApp')
                 $scope.showModal = true;
             };
 
-            $scope.increaseItemCount = function() {
+            $scope.increaseSelectedItemCount = function() {
                 self.selectedBeerQuantity++;
             };
             $scope.increaseItemCount = function(item) {
                 item.Quantity++;
             };
-            $scope.decreaseItemCount = function() {
+            $scope.decreaseSelectedItemCount = function() {
                 if (self.selectedBeerQuantity > 0) {
                     self.selectedBeerQuantity--;
                 }
@@ -71,7 +78,7 @@ angular.module('myApp')
                     item.Quantity--;
                 }
             };
-            self.addToCart = function () {
+            self.addSelectedToCart = function () {
                 cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );
                 $window.alert('Product was successfully added to cart/');
 

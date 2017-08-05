@@ -76,7 +76,7 @@
                     <lable ng-hide="!loginState"> Quantity: {{pc.selectedBeerQuantity}} </lable>
                     <button type="button" class="btn btn-default" ng-click="increaseSelectedItemCount()" ng-hide="!loginState">+</button>
                     <br>
-                    <button ng-hide="!loginState" type="button" class="btn btn-default" ng-click ="pc.addToCart()" ng-disabled="pc.selectedBeerQuantity==0" data-dismiss="modal" >Add to Cart</button>
+                    <button ng-hide="!loginState" type="button" class="btn btn-default" ng-click ="pc.addSelectedToCart()" ng-disabled="pc.selectedBeerQuantity==0" data-dismiss="modal" >Add to Cart</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

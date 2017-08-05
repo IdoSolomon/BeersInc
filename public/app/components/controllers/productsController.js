@@ -54,7 +54,7 @@ angular.module('myApp')
                     item.Quantity--;
                 }
             };
-            self.addToCart = function () {
+            self.addSelectedToCart = function () {
                 cartService.addToCart(self.selectedBeer,self.selectedBeerQuantity );
                 $window.alert('Product was successfully added to cart/');
 
