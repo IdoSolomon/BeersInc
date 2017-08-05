@@ -1049,7 +1049,7 @@ connection.on('connect', function (err) {
                         .set("Username", name)
                         .set("Password", pass)
                         .set("CountryID", country)
-                        .set("IsManager", false)
+                        .set("IsManager", 0)
                         .toString()
                 );
 
