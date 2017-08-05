@@ -16,4 +16,4 @@ Fennec		Fennec		No
 Raccoon		Raccoon		No
 Serval		Serval		No
 
-GET and POST methods are ducomented in the attached API pdf.
+GET and POST methods are documented in the attached API pdf.
